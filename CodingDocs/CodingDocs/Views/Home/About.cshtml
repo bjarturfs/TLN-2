@@ -5,4 +5,24 @@
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
-<p>er ad profa ad breyta eh</p>
+<p>ad profa er god skemmtun</p>
+
+<link href="~/CodeMirror/lib/codemirror.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="~/CodeMirror/lib/codemirror.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        var code = $(".codemirror-textarea")[0];
+        var editor = CodeMirror.fromTextArea(code, {
+            lineNumbers: true
+        });
+
+    });
+
+</script>
+
+
+
+<textarea class="codemirror-textarea"></textarea>
