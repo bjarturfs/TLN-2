@@ -16,7 +16,7 @@ namespace CodingDocs.Services
             _db = new ApplicationDbContext();
         }
 
-        public List<ProjectViewModel> GetIndividualProjects(int UserID)
+        public List<ProjectViewModel> GetIndividualProjects(string UserID)
         {
             var projects = (from proj in _db.Projects
                             where proj.OwnerID == UserID
