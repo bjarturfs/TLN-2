@@ -79,8 +79,8 @@ namespace CodingDocs.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                    //return RedirectToAction("About", "Home");
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("GetIndividualProjects", "Project");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

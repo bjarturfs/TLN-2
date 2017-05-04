@@ -1,0 +1,14 @@
+﻿@model List<CodingDocs.Models.ViewModels.ProjectViewModel>
+
+@{
+    ViewBag.Title = "GetIndividualProjects";
+}
+
+<h2>GetIndividualProjects</h2>
+
+<ul>
+    @foreach(var proj in Model)
+    {
+        <li>@proj.Name</li>
+    }
+</ul>
