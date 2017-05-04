@@ -16,7 +16,7 @@ namespace CodingDocs
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Account", action = "UserProfile", id = UrlParameter.Optional }
+                defaults: new { controller = "Project", action = "GetIndividualProjects", id = UrlParameter.Optional }
             );
         }
     }

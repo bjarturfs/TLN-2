@@ -79,7 +79,6 @@ namespace CodingDocs.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //return RedirectToLocal(returnUrl);
                     return RedirectToAction("GetIndividualProjects", "Project");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -157,14 +156,14 @@ namespace CodingDocs.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetIndividualProjects", "Project");
                 }
                 AddErrors(result);
             }
@@ -393,7 +392,7 @@ namespace CodingDocs.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //
@@ -424,13 +423,6 @@ namespace CodingDocs.Controllers
             base.Dispose(disposing);
         }
 
-        //
-        // GET: /Account/UserProfile
-        public ActionResult UserProfile()
-        {
-            return View();
-        }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -457,7 +449,7 @@ namespace CodingDocs.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GetIndividualProjects", "Project");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

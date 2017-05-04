@@ -4,13 +4,20 @@
     ViewBag.Title = "GetIndividualProjects";
 }
 
-<h2>GetIndividualProjects</h2>
+<h1> Homepage </h1>
 
-<ul>
-    @foreach(var proj in Model)
-    {
-        <li>@proj.Name</li>
-    }
-</ul>
+<h3>My Projects</h3>
+
+@foreach (var proj in Model)
+{
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <h3>@proj.Name</h3>
+            <p>
+                @proj.Type
+            </p>
+        </div>
+    </div>
+}
 
 @Html.ActionLink("Shared Projects", "GetSharedProjects", "Project")
