@@ -1,0 +1,17 @@
+﻿@model List<CodingDocs.Models.ViewModels.ProjectViewModel>
+
+@{
+    ViewBag.Title = "GetSharedProjects";
+}
+
+<h2>Shared Projects</h2>
+
+<ul>
+    @foreach (var proj in Model)
+    {
+        <li>@proj.Name</li>
+    }
+</ul>
+
+@Html.ActionLink("My Projects", "GetIndividualProjects", "Project")
+

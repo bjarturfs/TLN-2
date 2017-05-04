@@ -25,5 +25,13 @@ namespace CodingDocs.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult GetSharedProjects()
+        {
+            string userId = User.Identity.GetUserId();
+            var viewModel = pservice.GetSharedProjects(userId);
+
+            return View(viewModel);
+        }
     }
 }
