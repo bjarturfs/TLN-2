@@ -34,7 +34,6 @@ namespace CodingDocs.Services
                             select proj)
                             .Select(x => new ProjectViewModel { Name = x.Name, Type = x.Type })
                             .ToList();
-
             return projects;
         }
     }

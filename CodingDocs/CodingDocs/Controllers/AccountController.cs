@@ -79,7 +79,7 @@ namespace CodingDocs.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("GetIndividualProjects", "Project");
+                    return RedirectToAction("MyProjects", "Project");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -163,7 +163,7 @@ namespace CodingDocs.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("GetIndividualProjects", "Project");
+                    return RedirectToAction("MyProjects", "Project");
                 }
                 AddErrors(result);
             }
@@ -449,7 +449,7 @@ namespace CodingDocs.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("GetIndividualProjects", "Project");
+            return RedirectToAction("MyProjects", "Project");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
