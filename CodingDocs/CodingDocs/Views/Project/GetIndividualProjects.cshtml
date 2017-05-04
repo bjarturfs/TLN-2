@@ -4,11 +4,20 @@
     ViewBag.Title = "GetIndividualProjects";
 }
 
-<h2>IndividualProjects</h2>
 
-<ul>
-    @foreach(var proj in Model)
-    {
-        <li>@proj.Name</li>
-    }
-</ul>
+<h1> Homepage </h1>
+
+<h3>Individual Projects</h3>
+
+
+@foreach (var proj in Model)
+{
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <h3>@proj.Name</h3>
+            <p>
+                @proj.Type
+            </p>
+        </div>
+    </div>
+}
