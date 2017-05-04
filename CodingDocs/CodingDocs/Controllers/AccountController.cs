@@ -80,6 +80,7 @@ namespace CodingDocs.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
+                    //return RedirectToAction("About", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
