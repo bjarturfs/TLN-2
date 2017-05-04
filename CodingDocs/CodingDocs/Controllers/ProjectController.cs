@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CodingDocs.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private ProjectService pservice = new ProjectService();
