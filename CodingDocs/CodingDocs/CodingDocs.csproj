@@ -827,6 +827,7 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Project\MyProjects.cshtml" />
     <Content Include="Views\Project\SharedProjects.cshtml" />
+    <Content Include="Views\Project\CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
