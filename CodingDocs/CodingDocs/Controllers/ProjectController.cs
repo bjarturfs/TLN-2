@@ -1,4 +1,6 @@
-﻿using CodingDocs.Services;
+﻿using CodingDocs.Models.Entities;
+using CodingDocs.Models.ViewModels;
+using CodingDocs.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -35,13 +37,40 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if (userId == null)
+            if(userId == null)
             {
                 //TODO: error handling
             }
 
             var viewModel = pservice.GetSharedProjects(userId);
             return View(viewModel);
+        }
+
+        public ActionResult CreateProject()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProject(ProjectViewModel projectVM)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if(userId == null)
+            {
+                //TODO: error handling
+            }
+
+            Project project = new Project
+            {
+                Name = projectVM.Name,
+                Type = projectVM.Type,
+                OwnerID = userId
+            };
+
+            // Check ModelState?
+            pservice.CreateProject(project);
+            return RedirectToAction("MyProjects");
         }
     }
 }

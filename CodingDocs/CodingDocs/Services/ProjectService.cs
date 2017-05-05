@@ -1,5 +1,7 @@
 ﻿using CodingDocs.Models;
+using CodingDocs.Models.Entities;
 using CodingDocs.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,13 @@ namespace CodingDocs.Services
                             .Select(x => new ProjectViewModel { Name = x.Name, Type = x.Type })
                             .ToList();
             return projects;
+        }
+
+        // Maybe return bool?
+        public void CreateProject(Project project)
+        {
+            _db.Projects.Add(project);
+            _db.SaveChanges();
         }
     }
 }
