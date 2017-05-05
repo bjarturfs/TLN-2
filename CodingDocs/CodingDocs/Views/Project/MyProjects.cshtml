@@ -1,0 +1,23 @@
+﻿@model List<CodingDocs.Models.ViewModels.ProjectViewModel>
+
+@{
+    ViewBag.Title = "My Projects";
+}
+
+<h1> Homepage </h1>
+
+<h3>My Projects</h3>
+
+@foreach (var proj in Model)
+{
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <h3>@proj.Name</h3>
+            <p>
+                @proj.Type
+            </p>
+        </div>
+    </div>
+}
+
+@Html.ActionLink("Shared Projects", "SharedProjects", "Project")

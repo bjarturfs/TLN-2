@@ -13,17 +13,34 @@ namespace CodingDocs.Controllers
     {
         private ProjectService pservice = new ProjectService();
 
-        // GET: Project
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult GetIndividualProjects()
+        public ActionResult MyProjects()
         {
             string userId = User.Identity.GetUserId();
-            var viewModel = pservice.GetIndividualProjects(userId);
 
+            if(userId == null)
+            {
+                //TODO: error handling
+            }
+
+            var viewModel = pservice.GetIndividualProjects(userId);
+            return View(viewModel);
+        }
+
+        public ActionResult SharedProjects()
+        {
+            string userId = User.Identity.GetUserId();
+
+            if (userId == null)
+            {
+                //TODO: error handling
+            }
+
+            var viewModel = pservice.GetSharedProjects(userId);
             return View(viewModel);
         }
     }
