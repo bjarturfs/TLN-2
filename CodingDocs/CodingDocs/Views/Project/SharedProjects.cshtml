@@ -7,19 +7,20 @@
 <h1> Homepage </h1>
 
 <h3>Shared Projects</h3>
-
-@foreach (var proj in Model)
-{
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <h3>@proj.Name</h3>
-            <p>
-                @proj.Type
-            </p>
-        </div>
+<div class="myAndShare">
+    <div class="btn-group">
+        <button type="button" class="btn breadcrumb">@Html.ActionLink("My Projects", "MyProjects", "Project")</button>
+        <button type="button" class="btn breadcrumb">Shared Projects</button>
     </div>
-}
+</div>
+    @foreach (var proj in Model)
+    {
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <img src="~/Pics/upgrademappa.png" alt="meppa" />
+                <label class="folderName">@proj.Name . @proj.Type</label>
+            </div>
+        </div>
+    }
 
-@Html.ActionLink("My Projects", "MyProjects", "Project")
-@Html.ActionLink("Create Project", "CreateProject", "Project")
 
