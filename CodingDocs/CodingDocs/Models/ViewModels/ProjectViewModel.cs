@@ -9,6 +9,7 @@ namespace CodingDocs.Models.ViewModels
     {
         public string Name { get; set; }
         public string Type { get; set; }
+        public int ID { get; set; }
         //public List<File> Files { get; set; }
     }
 }

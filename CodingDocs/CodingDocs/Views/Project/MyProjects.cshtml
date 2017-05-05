@@ -17,11 +17,14 @@
 {
     <div class="col-sm-4">
         <div class="panel panel-default">
-            <img src="~/Pics/upgrademappa.png" alt="meppa" />
-            <label class="folderName">@proj.Name . @proj.Type</label>
+            <img src="~/Pics/upgrademappa.png" alt="meppa" /><br/>
+            <label class="folderName">@Html.ActionLink(proj.Name, "CreateProject", new { id = proj.ID }) . @proj.Type</label>
         </div>
     </div>
 }
 
 @Html.ActionLink("Create Project", "CreateProject", "Project")
+
+
+
 
