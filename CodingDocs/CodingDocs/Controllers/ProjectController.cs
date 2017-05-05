@@ -56,20 +56,13 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if(userId == null)
+             if (userId == null)
             {
                 //TODO: error handling
             }
 
-            Project project = new Project
-            {
-                Name = projectVM.Name,
-                Type = projectVM.Type,
-                OwnerID = userId
-            };
-
             // Check ModelState?
-            pservice.CreateProject(project);
+            pservice.CreateProject(projectVM, userId);
             return RedirectToAction("MyProjects");
         }
     }

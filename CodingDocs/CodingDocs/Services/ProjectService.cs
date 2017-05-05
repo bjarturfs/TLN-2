@@ -40,8 +40,16 @@ namespace CodingDocs.Services
         }
 
         // Maybe return bool?
-        public void CreateProject(Project project)
+        public void CreateProject(ProjectViewModel projectVM, string userId)
         {
+
+            Project project = new Project
+            {
+                Name = projectVM.Name,
+                Type = projectVM.Type,
+                OwnerID = userId
+            };
+
             _db.Projects.Add(project);
             _db.SaveChanges();
         }
