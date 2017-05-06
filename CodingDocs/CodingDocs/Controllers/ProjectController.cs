@@ -81,9 +81,7 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
-<<<<<<< HEAD
-
-       public ActionResult InviteUser(int id)
+        public ActionResult InviteUser(int id)
         {
             var user = new ShareProjectViewModel();
             user.ProjectID = id;
@@ -94,11 +92,15 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult InviteUser(ShareProjectViewModel model)
         {
-            if(pservice.ValidUserName(model.UserName))
+            if (pservice.ValidUserName(model.UserName))
             {
                 pservice.ShareProject(model);
-                return RedirectToAction("ViewProject", new {id = model.ProjectID });
-=======
+                return RedirectToAction("ViewProject", new { id = model.ProjectID });
+            }
+
+            return View("Error");
+        }
+
         public ActionResult CreateFile(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -108,14 +110,11 @@ namespace CodingDocs.Controllers
                 var viewModel = new CreateFileViewModel();
                 viewModel.ProjectID = id;
                 return View(viewModel);
->>>>>>> d16509937bd16c8dab477287965176edbd5c4cd0
             }
 
             return View("Error");
         }
 
-<<<<<<< HEAD
-=======
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
@@ -123,6 +122,5 @@ namespace CodingDocs.Controllers
             pservice.CreateFile(file);
             return RedirectToAction("ViewProject", new { id = file.ProjectID });
         }
->>>>>>> d16509937bd16c8dab477287965176edbd5c4cd0
     }
 }

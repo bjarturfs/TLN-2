@@ -838,11 +838,8 @@
     <Content Include="Views\Project\SharedProjects.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Project\ViewProject.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Project\InviteUser.cshtml" />
-=======
     <Content Include="Views\Project\CreateFile.cshtml" />
->>>>>>> d16509937bd16c8dab477287965176edbd5c4cd0
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
