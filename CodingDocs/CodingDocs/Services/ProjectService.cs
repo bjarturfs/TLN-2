@@ -159,12 +159,21 @@ namespace CodingDocs.Services
 
         public void DeleteProject(int projectId)
         {
-            /*var project = (from proj in _db.Projects
+            var files = (from file in _db.Files
+                         where file.ProjectID == projectId
+                         select file).ToList();
+
+            foreach(var file in files)
+            {
+                _db.Files.Remove(file);
+            }
+
+            var project = (from proj in _db.Projects
                            where proj.ID == projectId
                            select proj).SingleOrDefault();
 
             _db.Projects.Remove(project);
-            _db.SaveChanges();*/
+            _db.SaveChanges();
         }
     }
 }
