@@ -11,6 +11,9 @@
 <ul>
     @foreach (var file in Model.Files)
     {
-        <li>@file.Name</li>
+        <li>@(file.Name + "." + file.Type)</li>
+        
     }
 </ul>
+
+<label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>

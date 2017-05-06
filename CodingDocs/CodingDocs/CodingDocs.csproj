@@ -209,6 +209,7 @@
     <Compile Include="Models\Entities\UsersInProject.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\CreateFileViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
@@ -836,6 +837,7 @@
     <Content Include="Views\Project\SharedProjects.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Project\ViewProject.cshtml" />
+    <Content Include="Views\Project\CreateFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

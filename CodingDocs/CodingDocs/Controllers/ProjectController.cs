@@ -80,5 +80,27 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
+
+        public ActionResult CreateFile(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if (pservice.AuthorizeProject(userId, id))
+            {
+                var viewModel = new CreateFileViewModel();
+                viewModel.ProjectID = id;
+                return View(viewModel);
+            }
+
+            return View("Error");
+        }
+
+        [HttpPost]
+        public ActionResult CreateFile(CreateFileViewModel file)
+        {
+            file.Type = pservice.GetProject(file.ProjectID).Type;
+            pservice.CreateFile(file);
+            return RedirectToAction("ViewProject", new { id = file.ProjectID });
+        }
     }
 }
