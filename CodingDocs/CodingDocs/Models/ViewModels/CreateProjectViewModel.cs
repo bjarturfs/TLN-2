@@ -5,11 +5,10 @@ using System.Web;
 
 namespace CodingDocs.Models.ViewModels
 {
-    public class ProjectViewModel
+    public class CreateProjectViewModel
     {
-        public int ID { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        //public List<File> Files { get; set; }
+        public string OwnerID { get; set; }
     }
 }

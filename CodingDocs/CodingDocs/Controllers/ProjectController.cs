@@ -52,18 +52,33 @@ namespace CodingDocs.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProject(ProjectViewModel projectVM)
+        public ActionResult CreateProject(CreateProjectViewModel project)
         {
             string userId = User.Identity.GetUserId();
 
-             if (userId == null)
+            if (userId == null)
             {
                 //TODO: error handling
             }
 
+            project.OwnerID = userId;
+
             // Check ModelState?
-            pservice.CreateProject(projectVM, userId);
+            pservice.CreateProject(project);
             return RedirectToAction("MyProjects");
+        }
+
+        public ActionResult ViewProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if(pservice.AuthorizeProject(userId, id))
+            {
+                var viewModel = pservice.GetProject(id);
+                return View(viewModel);
+            }
+
+            return View("Error");
         }
     }
 }

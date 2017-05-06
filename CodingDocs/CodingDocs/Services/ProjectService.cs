@@ -23,7 +23,7 @@ namespace CodingDocs.Services
             var projects = (from proj in _db.Projects
                             where proj.OwnerID == userId
                             select proj)
-                            .Select(x => new ProjectViewModel { Name = x.Name, Type = x.Type, ID = x.ID })
+                            .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                             .ToList();
             return projects;
         }
@@ -34,24 +34,68 @@ namespace CodingDocs.Services
                             join uip in _db.UsersInProjects on proj.ID equals uip.ProjectID
                             where uip.UserID == userId
                             select proj)
-                            .Select(x => new ProjectViewModel { Name = x.Name, Type = x.Type, ID = x.ID })
+                            .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                             .ToList();
             return projects;
         }
 
         // Maybe return bool?
-        public void CreateProject(ProjectViewModel projectVM, string userId)
+        public void CreateProject(CreateProjectViewModel projectVM)
         {
-
             Project project = new Project
             {
                 Name = projectVM.Name,
                 Type = projectVM.Type,
-                OwnerID = userId
+                OwnerID = projectVM.OwnerID,
             };
 
             _db.Projects.Add(project);
             _db.SaveChanges();
+        }
+
+        public void ShareProject(ShareProjectViewModel projectVM)
+        {
+            UsersInProject uip = new UsersInProject
+            {
+                ProjectID = projectVM.ProjectID,
+                UserID = projectVM.UserID
+            };
+
+            _db.UsersInProjects.Add(uip);
+            _db.SaveChanges();
+        }
+
+        public ProjectViewModel GetProject(int projectId)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.ID == projectId
+                           select proj)
+                           .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
+                           .SingleOrDefault();
+
+            // TODO: check if null
+
+            return project;
+        }
+
+        public bool AuthorizeProject(string userId, int projectId)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.ID == projectId
+                           select proj).SingleOrDefault();
+
+            if(project == null) return false;
+
+            if(project.OwnerID == userId) return true;
+
+            var sharedProject = (from uip in _db.UsersInProjects
+                                 where uip.ProjectID == projectId
+                                 && uip.UserID == userId
+                                 select uip).SingleOrDefault();
+
+            if(sharedProject != null) return true;    
+
+            return false;
         }
     }
 }
