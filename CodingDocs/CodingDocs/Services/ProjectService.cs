@@ -51,6 +51,15 @@ namespace CodingDocs.Services
 
             _db.Projects.Add(project);
             _db.SaveChanges();
+
+            CreateFileViewModel file = new CreateFileViewModel
+            {
+                Name = "index",
+                Type = project.Type,
+                ProjectID = project.ID
+            };
+
+            CreateFile(file);
         }
 
         public void ShareProject(ShareProjectViewModel projectVM)
@@ -121,6 +130,28 @@ namespace CodingDocs.Services
             if(sharedProject != null) return true;    
 
             return false;
+        }
+
+        public void CreateFile(CreateFileViewModel fileVM)
+        {
+            File file = new File
+            {
+                Name = fileVM.Name,
+                Type = fileVM.Type,
+                Content = "",
+            };
+
+            _db.Files.Add(file);
+            _db.SaveChanges();
+
+            FilesInProject fip = new FilesInProject
+            {
+                FileID = file.ID,
+                ProjectID = fileVM.ProjectID
+            };
+
+            _db.FilesInProjects.Add(fip);
+            _db.SaveChanges();
         }
     }
 }
