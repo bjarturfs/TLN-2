@@ -51,6 +51,15 @@ namespace CodingDocs.Services
 
             _db.Projects.Add(project);
             _db.SaveChanges();
+
+            CreateFileViewModel file = new CreateFileViewModel
+            {
+                Name = "index",
+                Type = project.Type,
+                ProjectID = project.ID
+            };
+
+            CreateFile(file);
         }
 
         public void ShareProject(ShareProjectViewModel projectVM)
