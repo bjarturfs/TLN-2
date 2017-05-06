@@ -24,6 +24,8 @@ namespace CodingDocs.Models
     {
         public DbSet<Project> Projects { get; set; }
         public DbSet<UsersInProject> UsersInProjects { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<FilesInProject> FilesInProjects { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -65,15 +65,22 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
-        public ProjectViewModel GetProject(int projectId)
+        public ViewProjectViewModel GetProject(int projectId)
         {
             var project = (from proj in _db.Projects
                            where proj.ID == projectId
                            select proj)
-                           .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
+                           .Select(x => new ViewProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                            .SingleOrDefault();
 
-            // TODO: check if null
+            var files = (from file in _db.Files
+                         join fip in _db.FilesInProjects on file.ID equals fip.FileID
+                         where fip.ProjectID == projectId
+                         select file)
+                         .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
+                         .ToList();
+
+            project.Files = files;
 
             return project;
         }
