@@ -55,14 +55,32 @@ namespace CodingDocs.Services
 
         public void ShareProject(ShareProjectViewModel projectVM)
         {
+            var userID = (from usr in _db.Users
+                        where usr.UserName == projectVM.UserName
+                        select usr.Id)
+                        .SingleOrDefault();
+
             UsersInProject uip = new UsersInProject
             {
                 ProjectID = projectVM.ProjectID,
-                UserID = projectVM.UserID
+                UserID = userID
             };
 
             _db.UsersInProjects.Add(uip);
             _db.SaveChanges();
+        }
+
+        public bool ValidUserName(string userName)
+        {
+            var user = (from usr in _db.Users
+                        where usr.UserName == userName
+                        select usr)
+                        .SingleOrDefault();
+
+            if (user == null) return false;
+
+            return true;
+   
         }
 
         public ViewProjectViewModel GetProject(int projectId)

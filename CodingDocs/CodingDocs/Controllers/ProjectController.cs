@@ -80,5 +80,27 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
+
+
+       public ActionResult InviteUser(int id)
+        {
+            var user = new ShareProjectViewModel();
+            user.ProjectID = id;
+        
+            return View(user); 
+        }
+
+        [HttpPost]
+        public ActionResult InviteUser(ShareProjectViewModel model)
+        {
+            if(pservice.ValidUserName(model.UserName))
+            {
+                pservice.ShareProject(model);
+                return RedirectToAction("ViewProject", new {id = model.ProjectID });
+            }
+
+            return View("Error");
+        }
+
     }
 }

@@ -4,6 +4,8 @@
     ViewBag.Title = Model.Name;
 }
 
+@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
+
 <h2>@Model.Name</h2>
 
 <p>@Model.Type</p>

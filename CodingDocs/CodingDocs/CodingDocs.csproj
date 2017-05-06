@@ -211,6 +211,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
+    <Compile Include="Models\ViewModels\InviteUserViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\ShareProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\ViewProjectViewModel.cs" />
@@ -836,6 +837,7 @@
     <Content Include="Views\Project\SharedProjects.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Project\ViewProject.cshtml" />
+    <Content Include="Views\Project\InviteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

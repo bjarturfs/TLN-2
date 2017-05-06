@@ -8,6 +8,6 @@ namespace CodingDocs.Models.ViewModels
     public class ShareProjectViewModel
     {
         public int ProjectID { get; set; }
-        public string UserID { get; set; }
+        public string UserName { get; set; }
     }
 }
