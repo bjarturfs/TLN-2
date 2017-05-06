@@ -65,9 +65,9 @@ namespace CodingDocs.Services
         public void ShareProject(ShareProjectViewModel projectVM)
         {
             var userID = (from usr in _db.Users
-                        where usr.UserName == projectVM.UserName
-                        select usr.Id)
-                        .SingleOrDefault();
+                          where usr.UserName == projectVM.UserName
+                          select usr.Id)
+                          .SingleOrDefault();
 
             UsersInProject uip = new UsersInProject
             {
@@ -101,8 +101,7 @@ namespace CodingDocs.Services
                            .SingleOrDefault();
 
             var files = (from file in _db.Files
-                         join fip in _db.FilesInProjects on file.ID equals fip.FileID
-                         where fip.ProjectID == projectId
+                         where file.ProjectID == projectId
                          select file)
                          .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
                          .ToList();
@@ -114,20 +113,32 @@ namespace CodingDocs.Services
 
         public bool AuthorizeProject(string userId, int projectId)
         {
+            if(IsOwner(userId, projectId)) return true;
+            if(HasSharedAccess(userId, projectId)) return true;
+
+            return false;
+        }
+
+        public bool IsOwner(string userId, int projectId)
+        {
             var project = (from proj in _db.Projects
                            where proj.ID == projectId
                            select proj).SingleOrDefault();
 
             if(project == null) return false;
-
             if(project.OwnerID == userId) return true;
 
+            return false;
+        }
+
+        public bool HasSharedAccess(string userId, int projectId)
+        {
             var sharedProject = (from uip in _db.UsersInProjects
                                  where uip.ProjectID == projectId
                                  && uip.UserID == userId
                                  select uip).SingleOrDefault();
 
-            if(sharedProject != null) return true;    
+            if(sharedProject != null) return true;
 
             return false;
         }
@@ -139,19 +150,21 @@ namespace CodingDocs.Services
                 Name = fileVM.Name,
                 Type = fileVM.Type,
                 Content = "",
+                ProjectID = fileVM.ProjectID
             };
 
             _db.Files.Add(file);
             _db.SaveChanges();
+        }
 
-            FilesInProject fip = new FilesInProject
-            {
-                FileID = file.ID,
-                ProjectID = fileVM.ProjectID
-            };
+        public void DeleteProject(int projectId)
+        {
+            /*var project = (from proj in _db.Projects
+                           where proj.ID == projectId
+                           select proj).SingleOrDefault();
 
-            _db.FilesInProjects.Add(fip);
-            _db.SaveChanges();
+            _db.Projects.Remove(project);
+            _db.SaveChanges();*/
         }
     }
 }

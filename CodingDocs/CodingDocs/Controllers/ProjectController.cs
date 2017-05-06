@@ -122,5 +122,17 @@ namespace CodingDocs.Controllers
             pservice.CreateFile(file);
             return RedirectToAction("ViewProject", new { id = file.ProjectID });
         }
+
+        public ActionResult DeleteProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if(pservice.IsOwner(userId, id))
+            {
+                pservice.DeleteProject(id);
+            }
+    
+            return RedirectToAction("MyProjects");
+        }
     }
 }
