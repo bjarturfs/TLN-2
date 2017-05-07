@@ -25,6 +25,7 @@ namespace CodingDocs.Services
                             select proj)
                             .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                             .ToList();
+
             return projects;
         }
 
@@ -36,6 +37,7 @@ namespace CodingDocs.Services
                             select proj)
                             .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                             .ToList();
+
             return projects;
         }
 
@@ -195,6 +197,25 @@ namespace CodingDocs.Services
                                  select uip).SingleOrDefault();
 
             _db.UsersInProjects.Remove(userInProject);
+            _db.SaveChanges();
+        }
+
+        public int GetProjectByFile(int fileId)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileId
+                        select f).SingleOrDefault();
+
+            return file.ProjectID;
+        }
+
+        public void DeleteFile(int fileId)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileId
+                        select f).SingleOrDefault();
+
+            _db.Files.Remove(file);
             _db.SaveChanges();
         }
     }

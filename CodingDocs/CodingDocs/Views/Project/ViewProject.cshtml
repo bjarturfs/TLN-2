@@ -13,7 +13,7 @@
 <ul>
     @foreach (var file in Model.Files)
     {
-        <li>@(file.Name + "." + file.Type)</li>
+        <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
     }
 </ul>
 

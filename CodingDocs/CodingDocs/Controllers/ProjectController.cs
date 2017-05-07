@@ -56,7 +56,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if (userId == null)
+            if(userId == null)
             {
                 //TODO: error handling
             }
@@ -92,7 +92,7 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult InviteUser(ShareProjectViewModel model)
         {
-            if (pservice.ValidUserName(model.UserName))
+            if(pservice.ValidUserName(model.UserName))
             {
                 pservice.ShareProject(model);
                 return RedirectToAction("ViewProject", new { id = model.ProjectID });
@@ -105,7 +105,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if (pservice.AuthorizeProject(userId, id))
+            if(pservice.AuthorizeProject(userId, id))
             {
                 var viewModel = new CreateFileViewModel();
                 viewModel.ProjectID = id;
@@ -130,9 +130,10 @@ namespace CodingDocs.Controllers
             if(pservice.IsOwner(userId, id))
             {
                 pservice.DeleteProject(id);
+                return RedirectToAction("MyProjects");
             }
-    
-            return RedirectToAction("MyProjects");
+
+            return View("Error");
         }
 
         public ActionResult RemoveSharedProject(int id)
@@ -147,9 +148,24 @@ namespace CodingDocs.Controllers
                     UserID = userId
                 };
                 pservice.RemoveSharedProject(project);
+                return RedirectToAction("SharedProjects");
             }
 
-            return RedirectToAction("SharedProjects");
+            return View("Error");
+        }
+
+        public ActionResult DeleteFile(int id)
+        {
+            string userId = User.Identity.GetUserId();
+            int projectId = pservice.GetProjectByFile(id);
+
+            if(pservice.AuthorizeProject(userId, projectId))
+            {
+                pservice.DeleteFile(id);
+                return RedirectToAction("ViewProject", new { id = projectId });
+            }
+
+            return View("Error");
         }
     }
 }
