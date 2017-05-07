@@ -54,16 +54,14 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
-            string userId = User.Identity.GetUserId();
-
-            if(userId == null)
+            if(!ModelState.IsValid)
             {
-                //TODO: error handling
+                return View(project);
             }
 
+            string userId = User.Identity.GetUserId();
             project.OwnerID = userId;
 
-            // Check ModelState?
             pservice.CreateProject(project);
             return RedirectToAction("MyProjects");
         }
@@ -96,23 +94,23 @@ namespace CodingDocs.Controllers
 
             if(!pservice.ValidUserName(model.UserName))
             {
-                ModelState.AddModelError("UserName", "User does not exist");
+                ModelState.AddModelError("UserName", "User does not exist.");
             }
 
             else
             {
                 if(pservice.HasAccess(model))
                 {
-                    ModelState.AddModelError("UserName", "User already has access to this project");
+                    ModelState.AddModelError("UserName", "User already has access to this project.");
                 }
 
                 if(pservice.GetUserId(model.UserName) == userId)
                 {
-                    ModelState.AddModelError("UserName", "You cannot invite yourself to this project");
+                    ModelState.AddModelError("UserName", "You cannot invite yourself to this project.");
                 }
             }
 
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -138,6 +136,16 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
+            if(pservice.FileExistsInProject(file))
+            {
+                ModelState.AddModelError("Name", "There is already a file by that name.");
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View(file);
+            }
+
             file.Type = pservice.GetProject(file.ProjectID).Type;
             pservice.CreateFile(file);
             return RedirectToAction("ViewProject", new { id = file.ProjectID });

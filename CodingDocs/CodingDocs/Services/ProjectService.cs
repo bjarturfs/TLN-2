@@ -240,5 +240,15 @@ namespace CodingDocs.Services
 
             return (userInProject != null);
         }
+
+        public bool FileExistsInProject(CreateFileViewModel newFile)
+        {
+            var file = (from f in _db.Files
+                        where f.Name == newFile.Name
+                        && f.ProjectID == newFile.ProjectID
+                        select f).SingleOrDefault();
+
+            return (file != null);
+        }
     }
 }
