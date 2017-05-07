@@ -11,13 +11,16 @@ namespace CodingDocs.Services
 {
     public class ProjectService
     {
+        #region Constructor
         private ApplicationDbContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
         }
+        #endregion
 
+        #region Projects
         public List<ProjectViewModel> GetIndividualProjects(string userId)
         {
             var projects = (from proj in _db.Projects
@@ -41,7 +44,34 @@ namespace CodingDocs.Services
             return projects;
         }
 
-        // Maybe return bool?
+        public ViewProjectViewModel GetProject(int projectId)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.ID == projectId
+                           select proj)
+                           .Select(x => new ViewProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
+                           .SingleOrDefault();
+
+            var files = (from file in _db.Files
+                         where file.ProjectID == projectId
+                         select file)
+                         .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
+                         .ToList();
+
+            project.Files = files;
+
+            return project;
+        }
+
+        public int GetProjectByFile(int fileId)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileId
+                        select f).SingleOrDefault();
+
+            return file.ProjectID;
+        }
+
         public void CreateProject(CreateProjectViewModel projectVM)
         {
             Project project = new Project
@@ -81,100 +111,23 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
-        public bool ValidUserName(string userName)
-        {
-            var user = (from usr in _db.Users
-                        where usr.UserName == userName
-                        select usr)
-                        .SingleOrDefault();
-
-            if (user == null) return false;
-
-            return true;
-        }
-
-        public ViewProjectViewModel GetProject(int projectId)
-        {
-            var project = (from proj in _db.Projects
-                           where proj.ID == projectId
-                           select proj)
-                           .Select(x => new ViewProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
-                           .SingleOrDefault();
-
-            var files = (from file in _db.Files
-                         where file.ProjectID == projectId
-                         select file)
-                         .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
-                         .ToList();
-
-            project.Files = files;
-
-            return project;
-        }
-
-        public bool AuthorizeProject(string userId, int projectId)
-        {
-            if(IsOwner(userId, projectId)) return true;
-            if(HasSharedAccess(userId, projectId)) return true;
-
-            return false;
-        }
-
-        public bool IsOwner(string userId, int projectId)
-        {
-            var project = (from proj in _db.Projects
-                           where proj.ID == projectId
-                           select proj).SingleOrDefault();
-
-            if(project == null) return false;
-            if(project.OwnerID == userId) return true;
-
-            return false;
-        }
-
-        public bool HasSharedAccess(string userId, int projectId)
-        {
-            var sharedProject = (from uip in _db.UsersInProjects
-                                 where uip.ProjectID == projectId
-                                 && uip.UserID == userId
-                                 select uip).SingleOrDefault();
-
-            if(sharedProject != null) return true;
-
-            return false;
-        }
-
-        public void CreateFile(CreateFileViewModel fileVM)
-        {
-            File file = new File
-            {
-                Name = fileVM.Name,
-                Type = fileVM.Type,
-                Content = "",
-                ProjectID = fileVM.ProjectID
-            };
-
-            _db.Files.Add(file);
-            _db.SaveChanges();
-        }
-
         public void DeleteProject(int projectId)
         {
             var files = (from file in _db.Files
                          where file.ProjectID == projectId
                          select file).ToList();
 
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 _db.Files.Remove(file);
             }
             _db.SaveChanges();
 
             var usersInProject = (from uip in _db.UsersInProjects
-                                 where uip.ProjectID == projectId
-                                 select uip).ToList();
+                                  where uip.ProjectID == projectId
+                                  select uip).ToList();
 
-            foreach(var uip in usersInProject)
+            foreach (var uip in usersInProject)
             {
                 _db.UsersInProjects.Remove(uip);
             }
@@ -199,13 +152,52 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
-        public int GetProjectByFile(int fileId)
+        public bool AuthorizeProject(string userId, int projectId)
         {
-            var file = (from f in _db.Files
-                        where f.ID == fileId
-                        select f).SingleOrDefault();
+            if (IsOwner(userId, projectId)) return true;
+            if (HasSharedAccess(userId, projectId)) return true;
 
-            return file.ProjectID;
+            return false;
+        }
+
+        public bool IsOwner(string userId, int projectId)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.ID == projectId
+                           select proj).SingleOrDefault();
+
+            if (project == null) return false;
+            if (project.OwnerID == userId) return true;
+
+            return false;
+        }
+
+        public bool HasSharedAccess(string userId, int projectId)
+        {
+            var sharedProject = (from uip in _db.UsersInProjects
+                                 where uip.ProjectID == projectId
+                                 && uip.UserID == userId
+                                 select uip).SingleOrDefault();
+
+            if (sharedProject != null) return true;
+
+            return false;
+        }
+        #endregion
+
+        #region Files
+        public void CreateFile(CreateFileViewModel fileVM)
+        {
+            File file = new File
+            {
+                Name = fileVM.Name,
+                Type = fileVM.Type,
+                Content = "",
+                ProjectID = fileVM.ProjectID
+            };
+
+            _db.Files.Add(file);
+            _db.SaveChanges();
         }
 
         public void DeleteFile(int fileId)
@@ -218,29 +210,6 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
-        public string GetUserId(string userName)
-        {
-            var user = (from usr in _db.Users
-                        where usr.UserName == userName
-                        select usr).SingleOrDefault();
-
-            // if(user == null) throw exception
-
-            return user.Id;
-        }
-
-        public bool HasAccess(ShareProjectViewModel projectVM)
-        {
-            string userId = GetUserId(projectVM.UserName);
-
-            var userInProject = (from uip in _db.UsersInProjects
-                                 where uip.ProjectID == projectVM.ProjectID
-                                 && uip.UserID == userId
-                                 select uip).SingleOrDefault();
-
-            return (userInProject != null);
-        }
-
         public bool FileExistsInProject(CreateFileViewModel newFile)
         {
             var file = (from f in _db.Files
@@ -250,5 +219,27 @@ namespace CodingDocs.Services
 
             return (file != null);
         }
+        #endregion
+
+        #region Users
+        public bool UserExists(string userName)
+        {
+            var user = (from usr in _db.Users
+                        where usr.UserName == userName
+                        select usr)
+                        .SingleOrDefault();
+
+            return (user != null) ;
+        }
+
+        public string GetUserId(string userName)
+        {
+            var user = (from usr in _db.Users
+                        where usr.UserName == userName
+                        select usr).SingleOrDefault();
+
+            return user.Id;
+        }
+        #endregion
     }
 }

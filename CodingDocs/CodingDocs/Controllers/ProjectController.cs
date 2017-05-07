@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace CodingDocs.Controllers
 {
@@ -15,19 +16,10 @@ namespace CodingDocs.Controllers
     {
         private ProjectService pservice = new ProjectService();
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        #region Projects
         public ActionResult MyProjects()
         {
             string userId = User.Identity.GetUserId();
-
-            if(userId == null)
-            {
-                //TODO: error handling
-            }
 
             var viewModel = pservice.GetIndividualProjects(userId);
             return View(viewModel);
@@ -37,13 +29,21 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if(userId == null)
-            {
-                //TODO: error handling
-            }
-
             var viewModel = pservice.GetSharedProjects(userId);
             return View(viewModel);
+        }
+
+        public ActionResult ViewProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if (pservice.AuthorizeProject(userId, id))
+            {
+                var viewModel = pservice.GetProject(id);
+                return View(viewModel);
+            }
+
+            return View("Error");
         }
 
         public ActionResult CreateProject()
@@ -66,19 +66,6 @@ namespace CodingDocs.Controllers
             return RedirectToAction("MyProjects");
         }
 
-        public ActionResult ViewProject(int id)
-        {
-            string userId = User.Identity.GetUserId();
-
-            if(pservice.AuthorizeProject(userId, id))
-            {
-                var viewModel = pservice.GetProject(id);
-                return View(viewModel);
-            }
-
-            return View("Error");
-        }
-
         public ActionResult InviteUser(int id)
         {
             var user = new ShareProjectViewModel();
@@ -92,19 +79,21 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if(!pservice.ValidUserName(model.UserName))
+            if(!pservice.UserExists(model.UserName))
             {
                 ModelState.AddModelError("UserName", "User does not exist.");
             }
 
             else
             {
-                if(pservice.HasAccess(model))
+                string newUserId = pservice.GetUserId(model.UserName);
+
+                if (pservice.HasSharedAccess(newUserId, model.ProjectID))
                 {
                     ModelState.AddModelError("UserName", "User already has access to this project.");
                 }
 
-                if(pservice.GetUserId(model.UserName) == userId)
+                if(newUserId == userId)
                 {
                     ModelState.AddModelError("UserName", "You cannot invite yourself to this project.");
                 }
@@ -119,6 +108,39 @@ namespace CodingDocs.Controllers
             return RedirectToAction("ViewProject", new { id = model.ProjectID });
         }
 
+        public ActionResult DeleteProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if (pservice.IsOwner(userId, id))
+            {
+                pservice.DeleteProject(id);
+                return RedirectToAction("MyProjects");
+            }
+
+            return View("Error");
+        }
+
+        public ActionResult RemoveSharedProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if (pservice.HasSharedAccess(userId, id))
+            {
+                var project = new RemoveProjectViewModel
+                {
+                    ProjectID = id,
+                    UserID = userId
+                };
+                pservice.RemoveSharedProject(project);
+                return RedirectToAction("SharedProjects");
+            }
+
+            return View("Error");
+        }
+        #endregion
+
+        #region Files
         public ActionResult CreateFile(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -151,37 +173,6 @@ namespace CodingDocs.Controllers
             return RedirectToAction("ViewProject", new { id = file.ProjectID });
         }
 
-        public ActionResult DeleteProject(int id)
-        {
-            string userId = User.Identity.GetUserId();
-
-            if(pservice.IsOwner(userId, id))
-            {
-                pservice.DeleteProject(id);
-                return RedirectToAction("MyProjects");
-            }
-
-            return View("Error");
-        }
-
-        public ActionResult RemoveSharedProject(int id)
-        {
-            string userId = User.Identity.GetUserId();
-
-            if(pservice.HasSharedAccess(userId, id))
-            {
-                var project = new RemoveProjectViewModel
-                {
-                    ProjectID = id,
-                    UserID = userId
-                };
-                pservice.RemoveSharedProject(project);
-                return RedirectToAction("SharedProjects");
-            }
-
-            return View("Error");
-        }
-
         public ActionResult DeleteFile(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -195,5 +186,6 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
+        #endregion
     }
 }
