@@ -69,8 +69,10 @@ namespace CodingDocs.Models
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(20, ErrorMessage = "Username must be at most 20 characters.")]
+        [MinLength(5, ErrorMessage = "Username must be at least 5 characters.")]
         //Regex from http://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
-        [RegularExpression(@"^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$", ErrorMessage = "Invalid Username.")]
+        [RegularExpression(@"^(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$", ErrorMessage = "Invalid Username.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
