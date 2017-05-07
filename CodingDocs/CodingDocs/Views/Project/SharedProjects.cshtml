@@ -13,14 +13,15 @@
         <button type="button" class="btn breadcrumb">Shared Projects</button>
     </div>
 </div>
-    @foreach (var proj in Model)
-    {
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <img src="~/Pics/upgrademappa.png" alt="meppa" />
-                <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
-            </div>
+@foreach (var proj in Model)
+{
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <img src="~/Pics/upgrademappa.png" alt="meppa" />
+            <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
+            @Html.ActionLink("Remove", "RemoveSharedProject", new { id = proj.ID }, new { style = "color:red" })
         </div>
-    }
+    </div>
+}
 
 

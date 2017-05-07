@@ -134,5 +134,22 @@ namespace CodingDocs.Controllers
     
             return RedirectToAction("MyProjects");
         }
+
+        public ActionResult RemoveSharedProject(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            if(pservice.HasSharedAccess(userId, id))
+            {
+                var project = new RemoveProjectViewModel
+                {
+                    ProjectID = id,
+                    UserID = userId
+                };
+                pservice.RemoveSharedProject(project);
+            }
+
+            return RedirectToAction("SharedProjects");
+        }
     }
 }

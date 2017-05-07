@@ -167,12 +167,34 @@ namespace CodingDocs.Services
             {
                 _db.Files.Remove(file);
             }
+            _db.SaveChanges();
+
+            var usersInProject = (from uip in _db.UsersInProjects
+                                 where uip.ProjectID == projectId
+                                 select uip).ToList();
+
+            foreach(var uip in usersInProject)
+            {
+                _db.UsersInProjects.Remove(uip);
+            }
+            _db.SaveChanges();
 
             var project = (from proj in _db.Projects
                            where proj.ID == projectId
                            select proj).SingleOrDefault();
 
             _db.Projects.Remove(project);
+            _db.SaveChanges();
+        }
+
+        public void RemoveSharedProject(RemoveProjectViewModel projectVM)
+        {
+            var userInProject = (from uip in _db.UsersInProjects
+                                 where uip.ProjectID == projectVM.ProjectID
+                                 && uip.UserID == projectVM.UserID
+                                 select uip).SingleOrDefault();
+
+            _db.UsersInProjects.Remove(userInProject);
             _db.SaveChanges();
         }
     }
