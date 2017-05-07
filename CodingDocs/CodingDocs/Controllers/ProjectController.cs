@@ -92,13 +92,33 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult InviteUser(ShareProjectViewModel model)
         {
-            if(pservice.ValidUserName(model.UserName))
+            string userId = User.Identity.GetUserId();
+
+            if(!pservice.ValidUserName(model.UserName))
             {
-                pservice.ShareProject(model);
-                return RedirectToAction("ViewProject", new { id = model.ProjectID });
+                ModelState.AddModelError("UserName", "User does not exist");
             }
 
-            return View("Error");
+            else
+            {
+                if(pservice.HasAccess(model))
+                {
+                    ModelState.AddModelError("UserName", "User already has access to this project");
+                }
+
+                if(pservice.GetUserId(model.UserName) == userId)
+                {
+                    ModelState.AddModelError("UserName", "You cannot invite yourself to this project");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            pservice.ShareProject(model);
+            return RedirectToAction("ViewProject", new { id = model.ProjectID });
         }
 
         public ActionResult CreateFile(int id)

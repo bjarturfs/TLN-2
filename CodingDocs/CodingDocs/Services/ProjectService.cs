@@ -91,7 +91,6 @@ namespace CodingDocs.Services
             if (user == null) return false;
 
             return true;
-   
         }
 
         public ViewProjectViewModel GetProject(int projectId)
@@ -217,6 +216,29 @@ namespace CodingDocs.Services
 
             _db.Files.Remove(file);
             _db.SaveChanges();
+        }
+
+        public string GetUserId(string userName)
+        {
+            var user = (from usr in _db.Users
+                        where usr.UserName == userName
+                        select usr).SingleOrDefault();
+
+            // if(user == null) throw exception
+
+            return user.Id;
+        }
+
+        public bool HasAccess(ShareProjectViewModel projectVM)
+        {
+            string userId = GetUserId(projectVM.UserName);
+
+            var userInProject = (from uip in _db.UsersInProjects
+                                 where uip.ProjectID == projectVM.ProjectID
+                                 && uip.UserID == userId
+                                 select uip).SingleOrDefault();
+
+            return (userInProject != null);
         }
     }
 }
