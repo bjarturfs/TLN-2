@@ -6,21 +6,15 @@
 
 <h2>@Model.Name</h2>
 
-<div class="container-fluid">
-    <h3>Files</h3>
-    <div class="row">
-        <div class="col-sm-3 col-lg-2">
-            <nav class="navbar navbar-default navbar-fixed-side">
-                @foreach (var file in Model.Files)
-                {
-                    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                    var jsonFile = serializer.Serialize(file);
-                    <button data-fileId="@file.ID" data-json="@jsonFile">@file.Name</button>
-                    <a class="glyphicon glyphicon-file">@(file.Name + "." + file.Type + " ")</a>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })<br />
-                }
-            </nav>
-        </div>
-    </div>
+<div id="file-list">
+    @foreach (var file in Model.Files)
+    {
+        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+        var jsonFile = serializer.Serialize(file);
+
+        <button data-json="@jsonFile">@file.Name</button>
+        <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
+    }
 </div>
 
 @using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
@@ -62,17 +56,14 @@
         editor.getSession().setMode("~/Ace/src/mode-javascript.js");
 
         $("button").click(function () {
-            var fileId = $(this).attr('data-fileId').toString();
-            $.ajax({
-                url: '@Url.Action("GetContent", "Project")',
-                data: {"id":fileId},
-                type: "GET",
-                success: function (result) {
-                    var res = result.toString();
-                    editor.setValue(res);
-                    editor.renderer.updateFull();
-                }
-            });
-        });
+            var jsonFile = JSON.parse($(this).attr('data-json'));
+            editor.setValue(jsonFile.Content);
+            current = jsonFile.ID;
+        })
+
+        $("form").submit(function () {
+            $("#hidden_content").val(editor.getSession().getValue());
+            $("#hidden_id").val(current);
+        })
     </script>
 }
