@@ -11,14 +11,12 @@ namespace CodingDocs.Services
 {
     public class ProjectService
     {
-        #region Constructor
         private ApplicationDbContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
         }
-        #endregion
 
         #region Projects
         public List<ProjectViewModel> GetIndividualProjects(string userId)
@@ -58,13 +56,23 @@ namespace CodingDocs.Services
                          .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
                          .ToList();
 
-            var usersID = (from user in _db.UsersInProjects
-                           where user.ProjectID == projectId
-                           select user.UserID)
+            var usersInProjectID = (from users in _db.UsersInProjects
+                                    where users.ProjectID == projectId
+                                    select users.UserID)
                            .ToList();
 
+            var userID = (from proj in _db.Projects
+                          where proj.ID == projectId
+                          select proj.OwnerID)
+                          .SingleOrDefault();
+
+            var ownerName = (from owner in _db.Users
+                             where owner.Id == userID
+                             select owner.UserName)
+                             .SingleOrDefault();
+
             List<string> usersNames = new List<string>();
-            foreach (var item in usersID)
+            foreach (var item in usersInProjectID)
             {
                 var holder = (from name in _db.Users
                               where name.Id == item
@@ -77,6 +85,7 @@ namespace CodingDocs.Services
 
             project.Files = files;
             project.UserName = usersNames;
+            project.OwnerName = ownerName;
 
             return project;
         }
@@ -228,6 +237,16 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
+        public void SaveFile(SaveFileViewModel fileVM)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileVM.ID
+                        select f).SingleOrDefault();
+
+            file.Content = fileVM.Content;
+            _db.SaveChanges();
+        }
+
         public bool FileExistsInProject(CreateFileViewModel newFile)
         {
             var file = (from f in _db.Files
@@ -237,6 +256,16 @@ namespace CodingDocs.Services
 
             return (file != null);
         }
+
+        public string GetContent(int fileId)
+        {
+            var content = (from f in _db.Files
+                           where f.ID == fileId
+                           select f.Content).SingleOrDefault();
+
+            return content;
+        }
+
         #endregion
 
         #region Users
