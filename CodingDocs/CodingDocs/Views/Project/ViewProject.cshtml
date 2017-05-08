@@ -4,18 +4,25 @@
     ViewBag.Title = Model.Name;
 }
 
+<style type="text/css" media="screen">
+    #editor {
+        position: relative;
+        height: 300px;
+    }
+</style>
 
 
 <h2>@Model.Name</h2>
 
 <p>@Model.Type</p>
 
-<ul>
+<div id="file-list">
     @foreach (var file in Model.Files)
     {
+        <button data-fileId="@file.ID">@file.Name</button>
         <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
     }
-</ul>
+</div>
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
@@ -33,4 +40,36 @@
         <li>@(user + " ")</li>
     }
 </ul>
+
+
+<div id="editor">
+    enginn file valinn
+</div>
+
+
+
+@section scripts{
+    <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("~/Ace/src/theme-monokai.js");
+        editor.getSession().setMode("~/Ace/src/mode-javascript.js");
+
+
+        $("button").click(function () {
+            var fileId = $(this).attr('data-fileId').toString();
+            $.ajax({
+                url: '@Url.Action("GetContent", "Project")',
+                data: {"id":fileId},
+                type: "GET",
+                success: function (result) {
+                    var res = result.toString();
+                    editor.setValue(res);
+                    editor.renderer.updateFull();
+                }
+            });
+        });
+
+    </script>
+}
 

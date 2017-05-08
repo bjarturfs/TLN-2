@@ -237,6 +237,15 @@ namespace CodingDocs.Services
 
             return (file != null);
         }
+
+        public string GetContent(int fileId)
+        {
+            var content = (from f in _db.Files
+                           where f.ID == fileId
+                           select f.Content).SingleOrDefault();
+
+            return content;
+        }
         #endregion
 
         #region Users
