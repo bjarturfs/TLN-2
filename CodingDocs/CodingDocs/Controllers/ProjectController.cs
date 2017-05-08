@@ -39,6 +39,7 @@ namespace CodingDocs.Controllers
 
             if (pservice.AuthorizeProject(userId, id))
             {
+                ViewBag.CurrentFile = "HalloFile";
                 var viewModel = pservice.GetProject(id);
                 return View(viewModel);
             }
