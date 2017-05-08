@@ -30,10 +30,6 @@
 
 @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
 
-<div id="editor">
-    enginn file valinn
-</div>
-
 <h3>Project Owner</h3>
 <div> @Model.OwnerName</div>
 
@@ -48,14 +44,26 @@
     }
 </ul>
 
+
+
+<div class="panel-body">
+    <div id="editor">
+    </div>
+</div>
+
+
+
+
 @section scripts{
     <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("~/Ace/src/theme-monokai.js");
-        editor.getSession().setMode("~/Ace/src/mode-javascript.js");
+        $(".pannel-body").hide();
 
         $("button").click(function () {
+            var editor = ace.edit("editor");
+            editor.setTheme("~/Ace/src/theme-monokai.js");
+            editor.getSession().setMode("~/Ace/src/mode-javascript.js");
+
             var jsonFile = JSON.parse($(this).attr('data-json'));
             editor.setValue(jsonFile.Content);
             current = jsonFile.ID;
