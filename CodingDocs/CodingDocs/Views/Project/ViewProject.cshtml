@@ -22,3 +22,15 @@
 <br />
 
 @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
+
+@if(Model.UserName.Any())
+{
+    <h3>Users In Project</h3>
+}
+<ul>
+    @foreach (var user in Model.UserName)
+    {
+        <li>@(user + " ")</li>
+    }
+</ul>
+
