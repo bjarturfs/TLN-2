@@ -6,14 +6,6 @@
 
 <h2>@Model.Name</h2>
 
-<style type="text/css" media="screen">
-    #editor {
-        position: relative;
-        height: 300px;
-    }
-</style>
-
-
 <div class="container-fluid">
     <h3>Files</h3>
     <div class="row">
@@ -58,37 +50,32 @@
     }
 </ul>
 
-
 <div id="no-file-open">
     <p>Please open a file to see the editor</p>
 </div>
-<div id="panel-body">
-    <div id="editor">
-    </div>
+
+<div id="panel_body">
+    <div id="editor"></div>
 </div>
-
-
-
 
 @section scripts{
     <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
+        var editor = ace.edit("editor");
+        var editorMode = 'ace/mode/javascript';
+        editor.setOptions({
+            useWrapMode: true,
+            highlightActiveLine: true,
+            showPrintMargin: false,
+            theme: 'ace/theme/tomorrow_night',
+            mode: editorMode
+        })
         
         $("#panel_body").hide();
         $("#save_button").hide();
         var current;
 
         $("button").click(function () {
-            var editor = ace.edit("editor");
-            var editorMode = 'ace/mode/javascript';
-            editor.setOptions({
-                useWrapMode: true,
-                highlightActiveLine: true,
-                showPrintMargin: false,
-                theme: 'ace/theme/tomorrow_night',
-                mode: editorMode
-            })
-
             var jsonFile = JSON.parse($(this).attr('data-json'));
             editor.setValue(jsonFile.Content);
             current = jsonFile.ID;
