@@ -208,6 +208,16 @@ namespace CodingDocs.Services
             _db.SaveChanges();
         }
 
+        public void SaveFile(SaveFileViewModel fileVM)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileVM.ID
+                        select f).SingleOrDefault();
+
+            file.Content = fileVM.Content;
+            _db.SaveChanges();
+        }
+
         public bool FileExistsInProject(CreateFileViewModel newFile)
         {
             var file = (from f in _db.Files
@@ -218,16 +228,6 @@ namespace CodingDocs.Services
             return (file != null);
         }
         #endregion
-
-        public void SaveFile(SaveFileViewModel fileVM)
-        {
-            var file = (from f in _db.Files
-                        where f.ID == fileVM.ID
-                        select f).SingleOrDefault();
-
-            file.Content = fileVM.Content;
-            _db.SaveChanges();
-        }
 
         #region Users
         public bool UserExists(string userName)

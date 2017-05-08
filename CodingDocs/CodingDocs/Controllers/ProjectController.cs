@@ -186,7 +186,6 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
-        #endregion
 
         [HttpPost]
         public ActionResult SaveFile(SaveFileViewModel file)
@@ -202,5 +201,6 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
+        #endregion
     }
 }

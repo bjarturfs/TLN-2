@@ -4,18 +4,18 @@
     ViewBag.Title = Model.Name;
 }
 
-@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
-
 <h2>@Model.Name</h2>
 
-@foreach (var file in Model.Files)
-{
-    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-    var jsonFile = serializer.Serialize(file);
+<div id="file-list">
+    @foreach (var file in Model.Files)
+    {
+        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+        var jsonFile = serializer.Serialize(file);
 
-    <button data-json="@jsonFile">@file.Name</button>
-    <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
-}
+        <button data-fileId="@file.ID" data-json="@jsonFile">@file.Name</button>
+        <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
+    }
+</div>
 
 @using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
 {
@@ -26,25 +26,44 @@
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
-<div id="editor">@Model.Name</div>
+<br />
 
-@section scripts {
+@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
+
+<div id="editor">
+    enginn file valinn
+</div>
+
+@if(Model.UserName.Any())
+{
+    <h3>Users In Project</h3>
+}
+<ul>
+    @foreach (var user in Model.UserName)
+    {
+        <li>@(user + " ")</li>
+    }
+</ul>
+
+@section scripts{
     <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("~/Ace/src/theme-monokai.js");
         editor.getSession().setMode("~/Ace/src/mode-javascript.js");
-        var current;
 
         $("button").click(function () {
-            var jsonFile = JSON.parse($(this).attr('data-json'));
-            editor.setValue(jsonFile.Content);
-            current = jsonFile.ID;
-        })
-
-        $("form").submit(function () {
-            $("#hidden_content").val(editor.getSession().getValue());
-            $("#hidden_id").val(current);
-        })
+            var fileId = $(this).attr('data-fileId').toString();
+            $.ajax({
+                url: '@Url.Action("GetContent", "Project")',
+                data: {"id":fileId},
+                type: "GET",
+                success: function (result) {
+                    var res = result.toString();
+                    editor.setValue(res);
+                    editor.renderer.updateFull();
+                }
+            });
+        });
     </script>
 }
