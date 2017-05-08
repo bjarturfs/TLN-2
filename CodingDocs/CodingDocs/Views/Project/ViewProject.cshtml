@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Name;
 }
 
-@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
+
 
 <h2>@Model.Name</h2>
 
@@ -18,3 +18,7 @@
 </ul>
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
+
+<br />
+
+@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
