@@ -12,7 +12,7 @@
         var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         var jsonFile = serializer.Serialize(file);
 
-        <button data-fileId="@file.ID" data-json="@jsonFile">@file.Name</button>
+        <button data-json="@jsonFile">@file.Name</button>
         <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
     }
 </div>
@@ -53,17 +53,14 @@
         editor.getSession().setMode("~/Ace/src/mode-javascript.js");
 
         $("button").click(function () {
-            var fileId = $(this).attr('data-fileId').toString();
-            $.ajax({
-                url: '@Url.Action("GetContent", "Project")',
-                data: {"id":fileId},
-                type: "GET",
-                success: function (result) {
-                    var res = result.toString();
-                    editor.setValue(res);
-                    editor.renderer.updateFull();
-                }
-            });
-        });
+            var jsonFile = JSON.parse($(this).attr('data-json'));
+            editor.setValue(jsonFile.Content);
+            current = jsonFile.ID;
+        })
+
+        $("form").submit(function () {
+            $("#hidden_content").val(editor.getSession().getValue());
+            $("#hidden_id").val(current);
+        })
     </script>
 }
