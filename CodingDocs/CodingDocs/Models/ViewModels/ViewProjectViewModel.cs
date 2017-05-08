@@ -12,5 +12,6 @@ namespace CodingDocs.Models.ViewModels
         public string Name { get; set; }
         public string Type { get; set; }
         public List<FileViewModel> Files { get; set; }
+        public List<string> UserName { get; set; }
     }
 }
