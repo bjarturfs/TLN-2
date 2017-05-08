@@ -201,6 +201,14 @@ namespace CodingDocs.Controllers
 
             return View("Error");
         }
+
+        public JsonResult GetContent(int id)
+        {
+            string content = pservice.GetContent(id);
+
+            return Json(content, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }
