@@ -10,12 +10,19 @@
 
 <p>@Model.Type</p>
 
-<ul>
-    @foreach (var file in Model.Files)
-    {
-        <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
-    }
-</ul>
+<div class="container-fluid">
+    <h3>Files</h3>
+    <div class="row">
+        <div class="col-sm-3 col-lg-2">
+            <nav class="navbar navbar-default navbar-fixed-side">
+                @foreach (var file in Model.Files)
+                {
+                    <a class="glyphicon glyphicon-file">@(file.Name + "." + file.Type + " ")</a>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })<br />
+                }
+            </nav>
+        </div>
+    </div>
+</div>
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
