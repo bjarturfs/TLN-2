@@ -56,7 +56,36 @@ namespace CodingDocs.Services
                          .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
                          .ToList();
 
+            var usersInProjectID = (from users in _db.UsersInProjects
+                                    where users.ProjectID == projectId
+                                    select users.UserID)
+                           .ToList();
+
+            var userID = (from proj in _db.Projects
+                          where proj.ID == projectId
+                          select proj.OwnerID)
+                          .SingleOrDefault();
+
+            var ownerName = (from owner in _db.Users
+                             where owner.Id == userID
+                             select owner.UserName)
+                             .SingleOrDefault();
+
+            List<string> usersNames = new List<string>();
+            foreach (var item in usersInProjectID)
+            {
+                var holder = (from name in _db.Users
+                              where name.Id == item
+                              select name.UserName)
+                              .SingleOrDefault();
+
+                usersNames.Add(holder);
+            }
+
+
             project.Files = files;
+            project.UserName = usersNames;
+            project.OwnerName = ownerName;
 
             return project;
         }
