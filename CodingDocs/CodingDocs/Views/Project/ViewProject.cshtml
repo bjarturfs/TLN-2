@@ -55,6 +55,7 @@
 </div>
 
 <div id="panel_body">
+    <h2 id="file_name"></h2>
     <div id="editor"></div>
 </div>
 
@@ -80,6 +81,7 @@
             editor.setValue(jsonFile.Content);
             current = jsonFile.ID;
 
+            $("#file_name").html(jsonFile.Name + "." + jsonFile.Type);
             $("#no-file-open").hide();
             $("#panel_body").show();
             $("#save_button").show();
