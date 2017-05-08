@@ -11,14 +11,12 @@ namespace CodingDocs.Services
 {
     public class ProjectService
     {
-        #region Constructor
         private ApplicationDbContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
         }
-        #endregion
 
         #region Projects
         public List<ProjectViewModel> GetIndividualProjects(string userId)
@@ -220,6 +218,16 @@ namespace CodingDocs.Services
             return (file != null);
         }
         #endregion
+
+        public void SaveFile(SaveFileViewModel fileVM)
+        {
+            var file = (from f in _db.Files
+                        where f.ID == fileVM.ID
+                        select f).SingleOrDefault();
+
+            file.Content = fileVM.Content;
+            _db.SaveChanges();
+        }
 
         #region Users
         public bool UserExists(string userName)

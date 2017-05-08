@@ -8,13 +8,43 @@
 
 <h2>@Model.Name</h2>
 
-<p>@Model.Type</p>
+@foreach (var file in Model.Files)
+{
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var jsonFile = serializer.Serialize(file);
 
-<ul>
-    @foreach (var file in Model.Files)
-    {
-        <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
-    }
-</ul>
+    <button data-json="@jsonFile">@file.Name</button>
+    <li>@(file.Name + "." + file.Type + " ")</li>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })
+}
+
+@using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
+{
+    @Html.Hidden("Content", null, new { @id = "hidden_content" })
+    @Html.Hidden("Id", null, new { @id = "hidden_id" })
+    <input type="submit" value="Save" />
+}
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
+
+<div id="editor">@Model.Name</div>
+
+@section scripts {
+    <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("~/Ace/src/theme-monokai.js");
+        editor.getSession().setMode("~/Ace/src/mode-javascript.js");
+        var current;
+
+        $("button").click(function () {
+            var jsonFile = JSON.parse($(this).attr('data-json'));
+            editor.setValue(jsonFile.Content);
+            current = jsonFile.ID;
+        })
+
+        $("form").submit(function () {
+            $("#hidden_content").val(editor.getSession().getValue());
+            $("#hidden_id").val(current);
+        })
+    </script>
+}
