@@ -1193,6 +1193,7 @@
     <Content Include="Views\Project\ViewProject.cshtml" />
     <Content Include="Views\Project\InviteUser.cshtml" />
     <Content Include="Views\Project\CreateFile.cshtml" />
+    <Content Include="Views\Shared\ErrorViewProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
