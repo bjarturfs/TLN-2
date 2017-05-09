@@ -79,7 +79,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if (!pservice.UserExists(model.UserName))
+            if(!pservice.UserExists(model.UserName))
             {
                 ModelState.AddModelError("UserName", "User does not exist.");
             }
@@ -88,18 +88,23 @@ namespace CodingDocs.Controllers
             {
                 string newUserId = pservice.GetUserId(model.UserName);
 
-                if (pservice.HasSharedAccess(newUserId, model.ProjectID))
+                if(pservice.HasSharedAccess(newUserId, model.ProjectID))
                 {
                     ModelState.AddModelError("UserName", "User already has access to this project.");
                 }
 
-                if (newUserId == userId)
+                if(newUserId == userId)
                 {
                     ModelState.AddModelError("UserName", "You cannot invite yourself to this project.");
                 }
+
+                if(pservice.IsOwner(newUserId, model.ProjectID))
+                {
+                    ModelState.AddModelError("UserName", "This user is the owner of the project.");
+                }
             }
 
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View(model);
             }
