@@ -1208,6 +1208,7 @@
     <Content Include="Views\Project\InviteUser.cshtml" />
     <Content Include="Views\Project\CreateFile.cshtml" />
     <Content Include="Views\Shared\ErrorViewProject.cshtml" />
+    <Content Include="Views\Project\CreateProjectPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
