@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using CodingDocs.Utilities;
 
 namespace CodingDocs
 {
@@ -7,7 +8,7 @@ namespace CodingDocs
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorAttribute());
         }
     }
 }

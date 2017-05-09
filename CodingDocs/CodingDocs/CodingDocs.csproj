@@ -220,6 +220,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\CustomApplicationException.cs" />
+    <Compile Include="Utilities\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ace\src\ace.js" />
