@@ -39,7 +39,6 @@ namespace CodingDocs.Controllers
 
             if (pservice.AuthorizeProject(userId, id))
             {
-                ViewBag.CurrentFile = "HalloFile";
                 var viewModel = pservice.GetProject(id);
                 return View(viewModel);
             }
@@ -197,19 +196,25 @@ namespace CodingDocs.Controllers
             if (pservice.AuthorizeProject(userId, projectId))
             {
                 pservice.SaveFile(file);
-                return RedirectToAction("ViewProject", new { id = projectId });
+                return RedirectToAction("GetFile", new { id = file.ID });
             }
 
             return View("Error");
         }
 
-        public JsonResult GetContent(int id)
+        public ActionResult GetFile(int id)
         {
-            string content = pservice.GetContent(id);
+            string userId = User.Identity.GetUserId();
+            int projectId = pservice.GetProjectByFile(id);
 
-            return Json(content, JsonRequestBehavior.AllowGet);
+            if(pservice.AuthorizeProject(userId, projectId))
+            {
+                var file = pservice.GetFile(id);
+                return View(file);
+            }
+
+            return View("ErrorViewProject");
         }
-
         #endregion
     }
 }

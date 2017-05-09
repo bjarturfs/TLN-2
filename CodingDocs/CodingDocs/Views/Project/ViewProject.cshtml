@@ -6,30 +6,28 @@
 
 <h1>@Model.Name</h1>
 
-<div class="container-fluid file_closed">
+<div class="container-fluid">
     <h3>Files</h3>
     <div class="row">
         <div class="col-sm-3 col-lg-2">
             <nav class="navbar navbar-default navbar-fixed-side">
                 @foreach (var file in Model.Files)
                 {
-                    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                    var jsonFile = serializer.Serialize(file);
-                    <button data-json="@jsonFile">@file.Name</button>
-                    <a class="glyphicon glyphicon-file">@(file.Name + "." + file.Type + " ")</a>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })<br />
+                    @Html.ActionLink(file.Name, "GetFile", new { id = file.ID })
+                    <br />
                 }
             </nav>
         </div>
     </div>
 </div>
 
-<label class="folderName file_closed">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
+<label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
-<br class="file_closed" />
+<br />
 
-@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID }, new { @class = "file_closed" })
+@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
 
-<div class="file_closed">
+<div>
 <h3>Project Owner</h3>
     <div> @Model.OwnerName</div>
 
@@ -44,73 +42,3 @@
         }
     </ul>
 </div>
-
-@using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
-{
-    @Html.Hidden("Content", null, new { @id = "hidden_content" })
-    @Html.Hidden("Id", null, new { @id = "hidden_id" })
-    <input type="submit" value="Back to Project" class="file_open btn btn-default" />
-}
-
-<div class="file_open">
-    <h2 id="file_name"></h2>
-    <div id="editor"></div>
-</div>
-
-@section scripts{
-    <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-    <script src="~/signalr/hubs"></script>
-    <script>
-        var editor = ace.edit("editor");
-        var editorMode = 'ace/mode/javascript';
-        editor.setOptions({
-            useWrapMode: true,
-            highlightActiveLine: true,
-            showPrintMargin: false,
-            theme: 'ace/theme/tomorrow_night',
-            mode: editorMode
-        });
-        
-        $(".file_open").hide();
-        var current;
-
-        $("button").click(function () {
-            var jsonFile = JSON.parse($(this).attr('data-json'));
-            editor.setValue(jsonFile.Content);
-            current = jsonFile.ID;
-
-            $("#file_name").html(jsonFile.Name + "." + jsonFile.Type);
-            $(".file_closed").hide();
-            $(".file_open").show();
-        });
-
-        $("form").submit(function () {
-            $("#hidden_content").val(editor.getSession().getValue());
-            $("#hidden_id").val(current);
-        });
-
-        var codeHub = $.connection.codeHub;
-        var silent = false;
-
-        codeHub.client.onChange = function (changeData) {
-            console.log(changeData);
-            silent = true;
-            editor.getSession().getDocument().applyDelta(changeData);
-            silent = false;
-        };
-
-        $.connection.hub.start().done(function () {
-
-            codeHub.server.joinDocument(current);
-
-            editor.on("change", function (obj) {
-                if (silent) {
-                    return;
-                }
-                console.log(obj);
-                codeHub.server.onChange(obj, current);
-            })
-        });
-    </script>
-}

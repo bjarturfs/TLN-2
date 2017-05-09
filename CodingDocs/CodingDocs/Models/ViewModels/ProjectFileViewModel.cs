@@ -5,12 +5,10 @@ using System.Web;
 
 namespace CodingDocs.Models.ViewModels
 {
-    public class FileViewModel
+    public class ProjectFileViewModel
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Content { get; set; }
-        public ProjectViewModel Project { get; set; }
     }
 }
