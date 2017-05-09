@@ -46,9 +46,9 @@ namespace CodingDocs.Controllers
             return View("ErrorViewProject");
         }
 
-        public ActionResult CreateProject()
+        public PartialViewResult CreateProjectPartial()
         {
-            return View();
+            return PartialView("CreateProjectPartial", new CreateProjectViewModel());
         }
 
         [HttpPost]
