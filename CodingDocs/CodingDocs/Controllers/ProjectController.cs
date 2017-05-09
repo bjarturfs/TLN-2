@@ -193,8 +193,10 @@ namespace CodingDocs.Controllers
             string userId = User.Identity.GetUserId();
             int projectId = pservice.GetProjectByFile(file.ID);
 
-            if (pservice.AuthorizeProject(userId, projectId))
+            if(pservice.AuthorizeProject(userId, projectId))
             {
+                if(file.Content == null) file.Content = "";
+
                 pservice.SaveFile(file);
                 return RedirectToAction("GetFile", new { id = file.ID });
             }
