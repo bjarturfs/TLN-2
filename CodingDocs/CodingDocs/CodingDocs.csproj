@@ -221,6 +221,7 @@
     <Compile Include="Models\ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\InviteUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProjectFileViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\RemoveProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\SaveFileViewModel.cs" />
@@ -1210,6 +1211,8 @@
     <Content Include="Views\Project\InviteUser.cshtml" />
     <Content Include="Views\Project\CreateFile.cshtml" />
     <Content Include="Views\Shared\ErrorViewProject.cshtml" />
+    <Content Include="Views\Project\GetFile.cshtml" />
+    <Content Include="Views\Project\CreateProjectPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

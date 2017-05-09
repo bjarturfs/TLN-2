@@ -53,7 +53,7 @@ namespace CodingDocs.Services
             var files = (from file in _db.Files
                          where file.ProjectID == projectId
                          select file)
-                         .Select(x => new FileViewModel { ID = x.ID, Name = x.Name, Type = x.Type, Content = x.Content })
+                         .Select(x => new ProjectFileViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                          .ToList();
 
             var usersInProjectID = (from users in _db.UsersInProjects
@@ -257,15 +257,29 @@ namespace CodingDocs.Services
             return (file != null);
         }
 
-        public string GetContent(int fileId)
+        public FileViewModel GetFile(int fileId)
         {
-            var content = (from f in _db.Files
-                           where f.ID == fileId
-                           select f.Content).SingleOrDefault();
+            var file = (from f in _db.Files
+                        where f.ID == fileId
+                        select f).SingleOrDefault();
 
-            return content;
+            var project = (from proj in _db.Projects
+                           where proj.ID == file.ProjectID
+                           select proj)
+                           .Select(x => new ProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
+                           .SingleOrDefault();
+
+            var fileVM = new FileViewModel
+            {
+                ID = file.ID,
+                Name = file.Name,
+                Type = file.Type,
+                Content = file.Content,
+                Project = project
+            };
+
+            return fileVM;
         }
-
         #endregion
 
         #region Users
