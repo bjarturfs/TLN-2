@@ -39,6 +39,7 @@ namespace CodingDocs.Controllers
 
             if (pservice.AuthorizeProject(userId, id))
             {
+                ViewBag.CurrentFile = "HalloFile";
                 var viewModel = pservice.GetProject(id);
                 return View(viewModel);
             }
@@ -54,7 +55,7 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(project);
             }
@@ -70,8 +71,8 @@ namespace CodingDocs.Controllers
         {
             var user = new ShareProjectViewModel();
             user.ProjectID = id;
-        
-            return View(user); 
+
+            return View(user);
         }
 
         [HttpPost]
@@ -79,7 +80,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if(!pservice.UserExists(model.UserName))
+            if (!pservice.UserExists(model.UserName))
             {
                 ModelState.AddModelError("UserName", "User does not exist.");
             }
@@ -93,13 +94,13 @@ namespace CodingDocs.Controllers
                     ModelState.AddModelError("UserName", "User already has access to this project.");
                 }
 
-                if(newUserId == userId)
+                if (newUserId == userId)
                 {
                     ModelState.AddModelError("UserName", "You cannot invite yourself to this project.");
                 }
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -145,7 +146,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if(pservice.AuthorizeProject(userId, id))
+            if (pservice.AuthorizeProject(userId, id))
             {
                 var viewModel = new CreateFileViewModel();
                 viewModel.ProjectID = id;
@@ -158,12 +159,12 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
-            if(pservice.FileExistsInProject(file))
+            if (pservice.FileExistsInProject(file))
             {
                 ModelState.AddModelError("Name", "There is already a file by that name.");
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(file);
             }
@@ -178,9 +179,24 @@ namespace CodingDocs.Controllers
             string userId = User.Identity.GetUserId();
             int projectId = pservice.GetProjectByFile(id);
 
-            if(pservice.AuthorizeProject(userId, projectId))
+            if (pservice.AuthorizeProject(userId, projectId))
             {
                 pservice.DeleteFile(id);
+                return RedirectToAction("ViewProject", new { id = projectId });
+            }
+
+            return View("Error");
+        }
+
+        [HttpPost]
+        public ActionResult SaveFile(SaveFileViewModel file)
+        {
+            string userId = User.Identity.GetUserId();
+            int projectId = pservice.GetProjectByFile(file.ID);
+
+            if (pservice.AuthorizeProject(userId, projectId))
+            {
+                pservice.SaveFile(file);
                 return RedirectToAction("ViewProject", new { id = projectId });
             }
 
