@@ -44,7 +44,7 @@ namespace CodingDocs.Controllers
                 return View(viewModel);
             }
 
-            return View("Error");
+            return View("ErrorViewProject");
         }
 
         public ActionResult CreateProject()
