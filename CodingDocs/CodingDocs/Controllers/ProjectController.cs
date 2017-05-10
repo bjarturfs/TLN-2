@@ -66,12 +66,12 @@ namespace CodingDocs.Controllers
             return RedirectToAction("MyProjects");
         }
 
-        public ActionResult InviteUser(int id)
+        public PartialViewResult InviteUserPartial(int id)
         {
             var user = new ShareProjectViewModel();
             user.ProjectID = id;
-
-            return View(user);
+            
+            return PartialView("InviteUserPartial", user);
         }
 
         [HttpPost]

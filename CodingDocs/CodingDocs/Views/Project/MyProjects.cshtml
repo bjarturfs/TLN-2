@@ -15,22 +15,8 @@
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project")</button>
     </div>
 </div>
-<<<<<<< HEAD
-<div id="projectList">
-@foreach (var proj in Model)
-{
-    <div class="col-sm-4">
-        <div class="panel panel-default" >
-            <img src="~/Pics/upgrademappa.png" alt="meppa" /><br/>
-            <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
-            @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
-        </div>
-    </div>
-}
-</div>
 
-=======
-<section id="myprojectForm">
+<section id="projectList">
     @foreach (var proj in Model)
     {
         <div class="col-sm-4">
@@ -42,7 +28,6 @@
         </div>
     }
 </section>
->>>>>>> 11f35b4783d1c0eef6a050fbd901401c4c2bfb65
 <button class="CreateProject">Create a project</button>
 <div id="CreateProjectForm"></div>
 
@@ -51,7 +36,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
  
     <script>
          $(function () {
@@ -62,7 +47,7 @@
                  $("#CreateProjectForm").dialog({
                      autoOpen: true,
                      position: { my: "center", at: "top+350", of: window },
-                     width: 1000,
+                     width: 500,
                      resizable: false,
                      title: 'Create a project',
                      modal: true,
@@ -79,7 +64,7 @@
                          }
                      },
                      close: function(event, ui){
-                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 200);
+                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 500);
                      }
                  });
                  return false;

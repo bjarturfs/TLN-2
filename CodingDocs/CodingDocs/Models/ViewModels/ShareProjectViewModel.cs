@@ -10,6 +10,7 @@ namespace CodingDocs.Models.ViewModels
     {
         public int ProjectID { get; set; }
         [Required]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
     }
 }
