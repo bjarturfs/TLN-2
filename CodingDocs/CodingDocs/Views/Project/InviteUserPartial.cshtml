@@ -1,0 +1,9 @@
+﻿@model CodingDocs.Models.ViewModels.ShareProjectViewModel
+
+<form id="myForm">
+    <div id="InviteUserForm">
+        @Html.LabelFor(model => model.UserName)
+        @Html.TextBoxFor(model => model.UserName)
+        @Html.HiddenFor(model => model.ProjectID, new { htmlAttributes = new { value = Model.ProjectID } })
+    </div>
+</form>
