@@ -46,6 +46,7 @@ body
     background-color:#F1F1F2;
     color:#283655;
 }
+
 .link1
 {
     color:#283655;
@@ -62,5 +63,33 @@ body
 .CreateProject
 {
     color:#283655;
+    border: 1px solid grey;
+    background-color:#F1F1F2;
 
+}
+
+.col-sm-4
+{
+   background-color:#F1F1F2;
+   border:none;
+}
+.panel-default
+{
+     background-color:#F1F1F2;
+     border:none;
+}
+
+/* css for shared project*/
+
+.link2
+{
+    color:#283655;
+    border-right:1px solid black;
+    padding-right:25px;
+   
+}
+
+.link2:hover
+{
+    text-decoration:none;
 }

@@ -18,8 +18,10 @@
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <img src="~/Pics/upgrademappa.png" alt="meppa" /><br />
+                <img src="~/Pics/upgrademappa.png" alt="meppa" />
+                <br />
                 <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
+                <br />
                 @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
             </div>
         </div>
