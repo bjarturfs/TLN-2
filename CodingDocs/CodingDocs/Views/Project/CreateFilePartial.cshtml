@@ -1,0 +1,11 @@
+﻿@model CodingDocs.Models.ViewModels.CreateFileViewModel
+
+<form id="myForm">
+    <div id="CreateFileForm">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name)
+        @Html.LabelFor(m => m.Type)
+        @Html.TextBoxFor(m => m.Type)
+        @Html.HiddenFor(model => model.ProjectID, new { htmlAttributes = new { value = Model.ProjectID } })
+    </div>
+</form>

@@ -8,6 +8,7 @@ using System.Web;
 
 namespace CodingDocs.Utilities
 {
+    // Loggs the error in the folder Error
     public class Logger
     {
         private static Logger theInstance = null;
@@ -32,7 +33,7 @@ namespace CodingDocs.Utilities
 
             if (!Directory.Exists(logFilePath))
             {
-                Directory.CreateDirectory("C:\\Test");
+                Directory.CreateDirectory("C:\\Error");
             }
             using (StreamWriter writer = new StreamWriter(logFilePath, true, Encoding.Default))
             {

@@ -12,6 +12,7 @@
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project", new {@class="link1" })</button>
     </div>
 </div>
+
 <section id="myprojectForm">
     @foreach (var proj in Model)
     {
@@ -60,7 +61,7 @@
                          }
                      },
                      close: function(event, ui){
-                         setTimeout(function(){window.location.reload(true)},200);
+                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 200);
                      }
                  });
                  return false;
