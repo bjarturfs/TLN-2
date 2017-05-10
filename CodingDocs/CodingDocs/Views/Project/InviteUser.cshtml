@@ -34,7 +34,10 @@
 
 <div>
     @Html.ActionLink("Back to List", "MyProjects")
+    <br />
+    @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID })
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
