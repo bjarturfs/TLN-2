@@ -3,7 +3,13 @@
 @{
     ViewBag.Title = Model.Name;
 }
-
+<style>
+    .yoDelete
+    {
+        width: 12px;
+        height: 12px;
+    }
+</style>
 <h1>@Model.Name</h1>
 
 <div class="container-fluid file_closed">
@@ -16,12 +22,13 @@
                     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                     var jsonFile = serializer.Serialize(file);
                     <button data-json="@jsonFile">@file.Name</button>
-                    <a class="glyphicon glyphicon-file">@(file.Name + "." + file.Type + " ")</a>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })<br />
+                    <a class="glyphicon glyphicon-file">@(file.Name + "." + file.Type + " ")</a>@Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red" })<img src="~/Content/images/del.png" alt="Delete" class = "yoDelete"/><br />
                 }
             </nav>
         </div>
     </div>
 </div>
+
 
 <label class="folderName file_closed">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
@@ -69,7 +76,7 @@
             theme: 'ace/theme/tomorrow_night',
             mode: editorMode
         })
-        
+
         $(".file_open").hide();
         var current;
 

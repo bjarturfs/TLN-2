@@ -21,11 +21,10 @@
             <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
             @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
         </div>
-    </div>
+   </div>
 }
 
+<img src="~/Content/images/addapadda.png" alt="adda" /><br />
 @Html.ActionLink("Create Project", "CreateProject", "Project")
-
-
 
 
