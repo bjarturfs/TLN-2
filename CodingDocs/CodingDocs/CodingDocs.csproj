@@ -1213,6 +1213,7 @@
     <Content Include="Views\Shared\ErrorViewProject.cshtml" />
     <Content Include="Views\Project\GetFile.cshtml" />
     <Content Include="Views\Project\CreateProjectPartial.cshtml" />
+    <Content Include="Views\Project\CreateFilePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

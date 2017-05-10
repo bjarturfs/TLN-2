@@ -4,7 +4,10 @@
     <div id="CreateProjectForm">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
         @Html.LabelFor(m => m.Type)
         @Html.TextBoxFor(m => m.Type)
+        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
     </div>
 </form>

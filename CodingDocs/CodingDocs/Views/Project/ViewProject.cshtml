@@ -10,7 +10,7 @@
     <h3>Files</h3>
     <div class="row">
         <div class="col-sm-3 col-lg-2">
-            <nav class="navbar navbar-default navbar-fixed-side">
+            <nav class="navbar navbar-default navbar-fixed-side" id="fileList">
                 @foreach (var file in Model.Files)
                 {
                     @Html.ActionLink(file.Name, "GetFile", new { id = file.ID })
@@ -20,6 +20,11 @@
         </div>
     </div>
 </div>
+
+
+<button class="Create-File">Create a new file</button>
+<div id="CreateFileForm"></div>
+
 
 <label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
 
@@ -42,3 +47,66 @@
         }
     </ul>
 </div>
+
+@section Scripts{
+    
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<script>
+
+        $(function () {
+            $("#CreateFileForm").dialog({
+                autoOpen: false
+            });
+            
+            $('.Create-File').on('click', function () {
+                $("#CreateFileForm").dialog({
+                    autoOpen: true,
+                    position: { my: "center", at: "top+350", of: window },
+                    width: 1000,
+                    resizable: false,
+                    title: 'Create a file',
+                    modal: true,
+                    open: function () {
+                        $(this).load('@Url.Action("CreateFilePartial", "Project", new {id=Model.ID})');
+                    },
+                    buttons: {
+                        "Create a File": function () {
+                            CreateFile();
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function () {
+                        setTimeout(function () { $("#fileList").load(location.href + " #fileList>*", ""); }, 500);
+                        
+                        
+                    }
+                });
+                return false;
+            });
+
+            function CreateFile() {
+                $.ajax({
+                    url: '@Url.Action("CreateFile","Project")',
+                    type: 'POST',
+                    data: $("#myForm").serialize(),
+                    success: function (data) {
+                        if (data) {
+                            $(':input', '#myForm')
+                            .not(':button, :submit, :reset, :hidden')
+                            .val('')
+                            .removeAttr('checked')
+                            .removeAttr('selected');
+                        }
+                    }
+                });
+            }
+
+        });
+</script>    
+}

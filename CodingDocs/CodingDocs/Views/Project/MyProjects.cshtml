@@ -13,16 +13,18 @@
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project")</button>
     </div>
 </div>
+<div id="projectList">
 @foreach (var proj in Model)
 {
     <div class="col-sm-4">
-        <div class="panel panel-default">
+        <div class="panel panel-default" >
             <img src="~/Pics/upgrademappa.png" alt="meppa" /><br/>
             <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
             @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
         </div>
     </div>
 }
+</div>
 
 <button class="CreateProject">Create a project</button>
 <div id="CreateProjectForm"></div>
@@ -62,7 +64,7 @@
                          }
                      },
                      close: function(event, ui){
-                         setTimeout(function(){window.location.reload(true)},200);
+                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 200);
                      }
                  });
                  return false;

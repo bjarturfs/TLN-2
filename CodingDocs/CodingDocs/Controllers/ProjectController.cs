@@ -155,6 +155,13 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
+        public PartialViewResult CreateFilePartial(int id)
+        {
+            var viewModel = new CreateFileViewModel();
+            viewModel.ProjectID = id;
+            return PartialView("CreateFilePartial", viewModel);
+        }
+
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
