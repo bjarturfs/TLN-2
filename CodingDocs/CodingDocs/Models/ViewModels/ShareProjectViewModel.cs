@@ -11,6 +11,7 @@ namespace CodingDocs.Models.ViewModels
         public int ProjectID { get; set; }
         [Required]
         [Display(Name = "Username")]
+        [MaxLength(30, ErrorMessage = "Name must be at most 30 characters.")]
         public string UserName { get; set; }
     }
 }
