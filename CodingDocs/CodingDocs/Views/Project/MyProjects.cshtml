@@ -12,14 +12,20 @@
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project", new {@class="link1" })</button>
     </div>
 </div>
+<div class="row bottom30">
+    <div class="col-md-12">
+        <button class="CreateProject pull-right">Create a project</button>
+    </div>
+</div>
+
+
 
 <section id="myprojectForm">
     @foreach (var proj in Model)
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <img src="~/Pics/upgrademappa.png" alt="meppa" />
-                <br />
+                <a href="@Url.Action("ViewProject", "Project",  new { id = proj.ID })" title="Coding Docs"><img src="~/Content/images/mappa.png" hight="220" width="200" alt="meppa" /></a>
                 <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
                 <br />
                 @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
@@ -27,7 +33,7 @@
         </div>
     }
 </section>
-<button class="CreateProject">Create a project</button>
+
 <div id="CreateProjectForm"></div>
 
 
@@ -35,7 +41,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
  
     <script>
          $(function () {
@@ -46,7 +52,7 @@
                  $("#CreateProjectForm").dialog({
                      autoOpen: true,
                      position: { my: "center", at: "top+350", of: window },
-                     width: 1000,
+                     width: 500,
                      resizable: false,
                      title: 'Create a project',
                      modal: true,
@@ -63,7 +69,7 @@
                          }
                      },
                      close: function(event, ui){
-                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 200);
+                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 500);
                      }
                  });
                  return false;
