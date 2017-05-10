@@ -14,7 +14,7 @@
 </div>
 
 <section id="myprojectForm">
-    @foreach (var proj in Model)
+    @foreach (var proj in Model.OrderBy(proj => proj.Name))
     {
         <div class="col-sm-4">
             <div class="panel panel-default">

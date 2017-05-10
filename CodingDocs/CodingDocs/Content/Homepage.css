@@ -16,7 +16,7 @@ body
 
 #myprojectForm
 {
-    text-align:center;
+    text-align: center;
 }
 
 .myAndShare
@@ -62,5 +62,18 @@ body
 .CreateProject
 {
     color:#283655;
+
+}
+
+.maFile
+{
+    max-height: 45%;
+    max-width: 45%;
+
+}
+
+.textOutside
+{
+    word-wrap: break-word;
 
 }

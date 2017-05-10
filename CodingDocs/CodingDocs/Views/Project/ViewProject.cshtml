@@ -4,22 +4,27 @@
     ViewBag.Title = Model.Name;
 }
 
+<link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
+
 <h1>@Model.Name</h1>
 
-<div class="container-fluid">
-    <h3>Files</h3>
-    <div class="row">
-        <div class="col-sm-3 col-lg-2">
-            <nav class="navbar navbar-default navbar-fixed-side" id="fileList">
-                @foreach (var file in Model.Files)
-                {
-                    @Html.ActionLink(file.Name, "GetFile", new { id = file.ID })
-                    <br />
-                }
-            </nav>
+
+<section id="myprojectForm">
+    @foreach (var file in Model.Files.OrderBy(file => file.Name))
+    {
+        <div class="col-sm-2 textOutside">
+            <div class="panel panel-default">
+                <img src="~/Content/images/maFile.png" class="maFile"> <br />
+                @Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID})
+                <br />
+            </div>
         </div>
-    </div>
-</div>
+    }
+</section>
+
+
+
+
 
 
 <button class="Create-File">Create a new file</button>
