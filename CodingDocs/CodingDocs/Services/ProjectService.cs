@@ -11,11 +11,11 @@ namespace CodingDocs.Services
 {
     public class ProjectService
     {
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
-        public ProjectService()
+        public ProjectService(IAppDataContext context)
         {
-            _db = new ApplicationDbContext();
+            _db = context ?? new ApplicationDbContext();
         }
 
         #region Projects
