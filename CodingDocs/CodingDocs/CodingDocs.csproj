@@ -646,10 +646,12 @@
     <Content Include="Content\Homepage.css" />
     <Content Include="Content\images\anbakgrunns.jpeg" />
     <Content Include="Content\images\del.png" />
+    <Content Include="Content\images\file.jpg" />
     <Content Include="Content\images\loginmynd.jpeg" />
     <Content Include="Content\images\mynd2.jpeg" />
     <Content Include="Content\images\Picture1.png" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\Project.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
