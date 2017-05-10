@@ -1,0 +1,97 @@
+﻿@model CodingDocs.Models.ViewModels.FileViewModel
+
+@{
+    ViewBag.Title = "GetFile";
+}
+
+<style type="text/css" media="screen">
+    .inline_buttons
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .editor_button
+    {
+        margin-right: 10px;
+    }
+    #file_name
+    {
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<h2 id="file_name">@(Model.Project.Name + "/" + Model.Name + "." + Model.Type)</h2>
+
+<div id="editor"></div>
+<br />
+
+<div class="inline_buttons">
+    @using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
+    {
+        @Html.Hidden("Content", null, new { @id = "hidden_content" })
+        @Html.Hidden("Id", null, new { @id = "hidden_id" })
+        <input type="submit" value="Save" class="btn btn-primary editor_button" />
+    }
+
+    @Html.ActionLink("Back to Project", "ViewProject", new { id = Model.Project.ID }, new { @class = "btn btn-default editor_button" })
+</div>
+
+@section scripts{
+    <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var editor = ace.edit("editor");
+        var editorMode = 'ace/mode/javascript';
+        editor.setOptions({
+            useWrapMode: true,
+            highlightActiveLine: true,
+            showPrintMargin: false,
+            theme: 'ace/theme/tomorrow_night',
+            mode: editorMode
+        });
+        var content = `@Model.Content`;
+        editor.setValue(content, -1);
+
+        $("form").submit(function () {
+            $("#hidden_content").val(editor.getSession().getValue());
+            $("#hidden_id").val(current);
+
+            var form = $(this);
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                method: "POST",
+                success: function (responseData) {
+                    document.activeElement.blur();
+                }
+            });
+            return false;
+        });
+
+        var codeHub = $.connection.codeHub;
+        var silent = false;
+        var current = @Model.ID;
+
+        codeHub.client.onChange = function (changeData) {
+            silent = true;
+            editor.getSession().getDocument().applyDelta(changeData);
+            silent = false;
+        };
+
+        $.connection.hub.start().done(function () {
+
+            codeHub.server.joinDocument(current);
+
+            editor.on("change", function (obj) {
+                if (silent) {
+                    return;
+                }
+                codeHub.server.onChange(obj, current);
+            })
+        });
+    </script>
+}
+

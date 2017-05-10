@@ -4,27 +4,90 @@
     ViewBag.Title = "My Projects";
 }
 
-<h1> Homepage </h1>
+<link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
 
-<h3>My Projects</h3>
+<div class="header">
+    <h1 class="center">Homepage</h1>
+</div>
 <div class="myAndShare">
     <div class="btn-group">
         <button type="button" class="btn breadcrumb">MyProject</button>
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project")</button>
     </div>
 </div>
-@foreach (var proj in Model)
-{
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <img src="~/Pics/upgrademappa.png" alt="meppa" /><br/>
-            <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
-            @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
+<section id="myprojectForm">
+    @foreach (var proj in Model)
+    {
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <img src="~/Pics/upgrademappa.png" alt="meppa" /><br />
+                <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
+                @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
+            </div>
         </div>
-   </div>
+    }
+</section>
+<button class="CreateProject">Create a project</button>
+<div id="CreateProjectForm"></div>
+
+
+@section Scripts{
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+ 
+    <script>
+         $(function () {
+             $("#CreateProjectForm").dialog({
+                 autoOpen: false
+             }); 
+             $('.CreateProject').on('click', function () {
+                 $("#CreateProjectForm").dialog({
+                     autoOpen: true,
+                     position: { my: "center", at: "top+350", of: window },
+                     width: 1000,
+                     resizable: false,
+                     title: 'Create a project',
+                     modal: true,
+                     open: function () {
+                         $(this).load('@Url.Action("CreateProjectPartial", "Project")');
+                     },
+                     buttons: {
+                         "Create a Project": function () {
+                             CreateAProject();
+                             $(this).dialog("close");
+                         },
+                         Cancel: function () {
+                             $(this).dialog("close");
+                         }
+                     },
+                     close: function(event, ui){
+                         setTimeout(function(){window.location.reload(true)},200);
+                     }
+                 });
+                 return false;
+             });
+ 
+             function CreateAProject() {
+                $.ajax({
+                     url: '@Url.Action("CreateProject", "Project")',
+                     type: 'POST',
+                     data: $("#myForm").serialize(),
+                     success: function (data) {
+                         if (data) {
+                             $(':input', '#myForm')
+                             .not(':button, :submit, :reset, :hidden')
+                             .val('')
+                             .removeAttr('checked')
+                             .removeAttr('selected');
+                         }
+                     }
+                 });
+             }
+ 
+         });
+ 
+     </script>
 }
-
-<img src="~/Content/images/addapadda.png" alt="adda" /><br />
-@Html.ActionLink("Create Project", "CreateProject", "Project")
-
 

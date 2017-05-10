@@ -72,6 +72,14 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -202,6 +210,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\CodeHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\Project.cs" />
@@ -212,6 +221,7 @@
     <Compile Include="Models\ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\InviteUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProjectFileViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\RemoveProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\SaveFileViewModel.cs" />
@@ -220,6 +230,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\CustomApplicationException.cs" />
+    <Compile Include="Utilities\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ace\src\ace.js" />
@@ -1116,10 +1129,11 @@
     <Content Include="CodeMirror\theme\zenburn.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\images\addapadda.png" />
-    <Content Include="Content\images\del.png" />
+    <Content Include="Content\Homepage.css" />
+    <Content Include="Content\images\anbakgrunns.jpeg" />
     <Content Include="Content\images\loginmynd.jpeg" />
     <Content Include="Content\images\mynd2.jpeg" />
+    <Content Include="Content\images\Picture1.png" />
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1146,6 +1160,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1195,6 +1211,9 @@
     <Content Include="Views\Project\ViewProject.cshtml" />
     <Content Include="Views\Project\InviteUser.cshtml" />
     <Content Include="Views\Project\CreateFile.cshtml" />
+    <Content Include="Views\Shared\ErrorViewProject.cshtml" />
+    <Content Include="Views\Project\GetFile.cshtml" />
+    <Content Include="Views\Project\CreateProjectPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

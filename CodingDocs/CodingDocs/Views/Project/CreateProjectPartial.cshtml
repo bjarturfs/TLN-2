@@ -1,0 +1,10 @@
+﻿@model CodingDocs.Models.ViewModels.CreateProjectViewModel
+ 
+ <form id="myForm">
+    <div id="CreateProjectForm">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name)
+        @Html.LabelFor(m => m.Type)
+        @Html.TextBoxFor(m => m.Type)
+    </div>
+</form>

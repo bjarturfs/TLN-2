@@ -39,17 +39,16 @@ namespace CodingDocs.Controllers
 
             if (pservice.AuthorizeProject(userId, id))
             {
-                ViewBag.CurrentFile = "HalloFile";
                 var viewModel = pservice.GetProject(id);
                 return View(viewModel);
             }
 
-            return View("Error");
+            return View("ErrorViewProject");
         }
 
-        public ActionResult CreateProject()
+        public PartialViewResult CreateProjectPartial()
         {
-            return View();
+            return PartialView("CreateProjectPartial", new CreateProjectViewModel());
         }
 
         [HttpPost]
@@ -80,7 +79,7 @@ namespace CodingDocs.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            if (!pservice.UserExists(model.UserName))
+            if(!pservice.UserExists(model.UserName))
             {
                 ModelState.AddModelError("UserName", "User does not exist.");
             }
@@ -89,18 +88,23 @@ namespace CodingDocs.Controllers
             {
                 string newUserId = pservice.GetUserId(model.UserName);
 
-                if (pservice.HasSharedAccess(newUserId, model.ProjectID))
+                if(pservice.HasSharedAccess(newUserId, model.ProjectID))
                 {
                     ModelState.AddModelError("UserName", "User already has access to this project.");
                 }
 
-                if (newUserId == userId)
+                if(newUserId == userId)
                 {
                     ModelState.AddModelError("UserName", "You cannot invite yourself to this project.");
                 }
+
+                if(pservice.IsOwner(newUserId, model.ProjectID))
+                {
+                    ModelState.AddModelError("UserName", "This user is the owner of the project.");
+                }
             }
 
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -194,22 +198,30 @@ namespace CodingDocs.Controllers
             string userId = User.Identity.GetUserId();
             int projectId = pservice.GetProjectByFile(file.ID);
 
-            if (pservice.AuthorizeProject(userId, projectId))
+            if(pservice.AuthorizeProject(userId, projectId))
             {
+                if(file.Content == null) file.Content = "";
+
                 pservice.SaveFile(file);
-                return RedirectToAction("ViewProject", new { id = projectId });
+                return RedirectToAction("GetFile", new { id = file.ID });
             }
 
             return View("Error");
         }
 
-        public JsonResult GetContent(int id)
+        public ActionResult GetFile(int id)
         {
-            string content = pservice.GetContent(id);
+            string userId = User.Identity.GetUserId();
+            int projectId = pservice.GetProjectByFile(id);
 
-            return Json(content, JsonRequestBehavior.AllowGet);
+            if(pservice.AuthorizeProject(userId, projectId))
+            {
+                var file = pservice.GetFile(id);
+                return View(file);
+            }
+
+            return View("ErrorViewProject");
         }
-
         #endregion
     }
 }
