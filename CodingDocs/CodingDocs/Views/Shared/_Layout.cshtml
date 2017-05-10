@@ -17,12 +17,13 @@
     <div class="navbar navbar-inverse navbar-fixed-top" id="hlekkur">
         <div class="container">
             <div class="navbar-header">
-                <img src="~/Content/images/Picture1.png" class="img1" height="35" width="35" />
+                
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a href="@Url.Action("MyProjects", "Project")" title="Coding Docs"> <img src="~/Content/images/Picture1.png" class="img1" height="40" width="40" /></a>
                 @Html.ActionLink("Coding Docs", "MyProjects", "Project", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
