@@ -16,7 +16,7 @@
 {
     <div class="col-sm-4">
         <div class="panel panel-default">
-            <img src="~/Pics/upgrademappa.png" alt="meppa" />
+            <a href="@Url.Action("ViewProject", "Project",  new { id = proj.ID })" title="Coding Docs"><img src="~/Content/images/mappa.png" hight="220" width="200" alt="meppa" /></a>
             <br />
             <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
             <br />
