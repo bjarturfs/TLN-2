@@ -647,6 +647,7 @@
     <Content Include="Content\images\anbakgrunns.jpeg" />
     <Content Include="Content\images\del.png" />
     <Content Include="Content\images\loginmynd.jpeg" />
+    <Content Include="Content\images\mappa.png" />
     <Content Include="Content\images\mynd2.jpeg" />
     <Content Include="Content\images\Picture1.png" />
     <Content Include="Content\login.css" />

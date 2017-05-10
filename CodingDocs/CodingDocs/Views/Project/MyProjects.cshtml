@@ -12,14 +12,19 @@
         <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project", new {@class="link1" })</button>
     </div>
 </div>
+<div class="row bottom30">
+    <div class="col-md-12">
+        <button class="CreateProject pull-right">Create a project</button>
+    </div>
+</div>
+
 
 <section id="myprojectForm">
     @foreach (var proj in Model)
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <img src="~/Pics/upgrademappa.png" alt="meppa" />
-                <br />
+                <a href="@Url.Action("ViewProject", "Project",  new { id = proj.ID })" title="Coding Docs"><img src="~/Content/images/mappa.png" hight="220" width="200" alt="meppa" /></a>
                 <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
                 <br />
                 @Html.ActionLink("Delete", "DeleteProject", new { id = proj.ID }, new { style = "color:red" })
@@ -27,7 +32,7 @@
         </div>
     }
 </section>
-<button class="CreateProject">Create a project</button>
+
 <div id="CreateProjectForm"></div>
 
 
