@@ -17,6 +17,7 @@ namespace CodingDocs.Controllers
         private ProjectService pservice = new ProjectService();
 
         #region Projects
+        // Gets all the projects of the user which he is the owner of 
         public ActionResult MyProjects()
         {
             string userId = User.Identity.GetUserId();
@@ -25,6 +26,7 @@ namespace CodingDocs.Controllers
             return View(viewModel);
         }
 
+        // Gets all the projects the user has been shared in 
         public ActionResult SharedProjects()
         {
             string userId = User.Identity.GetUserId();
@@ -33,6 +35,7 @@ namespace CodingDocs.Controllers
             return View(viewModel);
         }
 
+        // Shows the files, owner and users in the project which has the id that gets sent in
         public ActionResult ViewProject(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -46,11 +49,13 @@ namespace CodingDocs.Controllers
             return View("ErrorViewProject");
         }
 
+        // Gets a pop up window for create project
         public PartialViewResult CreateProjectPartial()
         {
             return PartialView("CreateProjectPartial", new CreateProjectViewModel());
         }
 
+        // Creates the project which was entered in the partial view
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
@@ -66,14 +71,17 @@ namespace CodingDocs.Controllers
             return RedirectToAction("MyProjects");
         }
 
-        public ActionResult InviteUser(int id)
+        // Gets a pop up view which takes in the project id which we want to share
+        public PartialViewResult InviteUserPartial(int id)
         {
             var user = new ShareProjectViewModel();
             user.ProjectID = id;
-
-            return View(user);
+            
+            return PartialView("InviteUserPartial", user);
         }
 
+        // Shares the project with the user that was inserted in the InviteUser view
+        // if the user does not exist then we will return error messages and not insert the user to the project
         [HttpPost]
         public ActionResult InviteUser(ShareProjectViewModel model)
         {
@@ -113,6 +121,7 @@ namespace CodingDocs.Controllers
             return RedirectToAction("ViewProject", new { id = model.ProjectID });
         }
 
+        // Deletes the project with the id that gets sent in the view and the user has to be the owner of the project
         public ActionResult DeleteProject(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -126,6 +135,8 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
+        // Removes the user from the shared Project with the id that gets sent in the view
+        // Does not delete the project just the user out of the project 
         public ActionResult RemoveSharedProject(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -146,20 +157,8 @@ namespace CodingDocs.Controllers
         #endregion
 
         #region Files
-        public ActionResult CreateFile(int id)
-        {
-            string userId = User.Identity.GetUserId();
 
-            if (pservice.AuthorizeProject(userId, id))
-            {
-                var viewModel = new CreateFileViewModel();
-                viewModel.ProjectID = id;
-                return View(viewModel);
-            }
-
-            return View("Error");
-        }
-
+        // Creates a pop up window for create file and takes in project id 
         public PartialViewResult CreateFilePartial(int id)
         {
             var viewModel = new CreateFileViewModel();
@@ -167,6 +166,7 @@ namespace CodingDocs.Controllers
             return PartialView("CreateFilePartial", viewModel);
         }
 
+        // Creates the file from the partial view in the project with the id from the partal view
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
@@ -185,6 +185,7 @@ namespace CodingDocs.Controllers
             return RedirectToAction("ViewProject", new { id = file.ProjectID });
         }
 
+        // Deletes the file with the id that gets sent in 
         public ActionResult DeleteFile(int id)
         {
             string userId = User.Identity.GetUserId();
@@ -199,6 +200,7 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
+        // Saves the file with the id from the SaveFileViewModel with the content from the SaveFileViewModel
         [HttpPost]
         public ActionResult SaveFile(SaveFileViewModel file)
         {
@@ -216,6 +218,7 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
+        // Displays the content in the ACE editor of the file with the id that gets sent in 
         public ActionResult GetFile(int id)
         {
             string userId = User.Identity.GetUserId();

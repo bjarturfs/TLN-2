@@ -4,12 +4,11 @@
     ViewBag.Title = "Shared Projects";
 }
 
-<h1> Homepage </h1>
+<link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
 
-<h3>Shared Projects</h3>
 <div class="myAndShare">
     <div class="btn-group">
-        <button type="button" class="btn breadcrumb">@Html.ActionLink("My Projects", "MyProjects", "Project")</button>
+        <button type="button" class="btn breadcrumb">@Html.ActionLink("My Projects", "MyProjects", "Project", new {@class="link2"})</button>
         <button type="button" class="btn breadcrumb">Shared Projects</button>
     </div>
 </div>
@@ -17,8 +16,10 @@
 {
     <div class="col-sm-4">
         <div class="panel panel-default">
-            <img src="~/Pics/upgrademappa.png" alt="meppa" />
+            <a href="@Url.Action("ViewProject", "Project",  new { id = proj.ID })" title="Coding Docs"><img src="~/Content/images/mappa.png" hight="220" width="200" alt="meppa" /></a>
+            <br />
             <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
+            <br />
             @Html.ActionLink("Remove", "RemoveSharedProject", new { id = proj.ID }, new { style = "color:red" })
         </div>
     </div>

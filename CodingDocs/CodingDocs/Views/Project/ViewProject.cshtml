@@ -4,27 +4,24 @@
     ViewBag.Title = Model.Name;
 }
 
-<link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
+<link href="~/Content/Project.css" rel="stylesheet" type="text/css">
 
-<h1>@Model.Name</h1>
+    <h1>@Model.Name</h1>
 
-
-<section id="myprojectForm">
-    @foreach (var file in Model.Files.OrderBy(file => file.Name))
-    {
-        <div class="col-sm-2 textOutside">
-            <div class="panel panel-default">
-                <img src="~/Content/images/maFile.png" class="maFile"> <br />
-                @Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID})
-                <br />
-            </div>
+<div class="container-fluid">
+    <h3>File </h3>
+    <div class="row">
+        <div class="col-sm-3 col-lg-2">
+            <nav class="navbar navbar-default navbar-fixed-side" id="fileList">
+                @foreach (var file in Model.Files)
+                {
+                    @Html.ActionLink(file.Name, "GetFile", new { id = file.ID })
+                    <br />
+                }
+            </nav>
         </div>
-    }
-</section>
-
-
-
-
+    </div>
+</div>
 
 
 <button class="Create-File">Create a new file</button>
@@ -35,12 +32,16 @@
 
 <br />
 
+<button class="Share-Project">Share Project</button>
+<div id="InviteUserForm"></div>
+
 @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
+
 
 <div>
 <h3>Project Owner</h3>
     <div> @Model.OwnerName</div>
-
+    <div id="UserList">
     @if(Model.UserName.Any())
     {
         <h3>Users In Project</h3>
@@ -51,6 +52,7 @@
             <li>@(user + " ")</li>
         }
     </ul>
+    </div>
 </div>
 
 @section Scripts{
@@ -58,7 +60,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
 <script>
 
         $(function () {
@@ -70,7 +72,7 @@
                 $("#CreateFileForm").dialog({
                     autoOpen: true,
                     position: { my: "center", at: "top+350", of: window },
-                    width: 1000,
+                    width: 440,
                     resizable: false,
                     title: 'Create a file',
                     modal: true,
@@ -98,6 +100,55 @@
             function CreateFile() {
                 $.ajax({
                     url: '@Url.Action("CreateFile","Project")',
+                    type: 'POST',
+                    data: $("#myForm").serialize(),
+                    success: function (data) {
+                        if (data) {
+                            $(':input', '#myForm')
+                            .not(':button, :submit, :reset, :hidden')
+                            .val('')
+                            .removeAttr('checked')
+                            .removeAttr('selected');
+                        }
+                    }
+                });
+            }
+
+
+
+
+            $('.Share-Project').on('click', function () {
+                $("#InviteUserForm").dialog({
+                    autoOpen: true,
+                    position: { my: "center", at: "top+350", of: window },
+                    width: 400,
+                    resizable: false,
+                    title: 'Invite user to your project',
+                    modal: true,
+                    open: function () {
+                        $(this).load('@Url.Action("InviteUserPartial", "Project", new {id=Model.ID})');
+                    },
+                    buttons: {
+                        "Invite user": function () {
+                            InviteUser();
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function () {
+                        setTimeout(function () { $("#UserList").load(location.href + " #UserList>*", ""); }, 500);
+
+
+                    }
+                });
+                return false;
+            });
+
+            function InviteUser() {
+                $.ajax({
+                    url: '@Url.Action("InviteUser", "Project")',
                     type: 'POST',
                     data: $("#myForm").serialize(),
                     success: function (data) {
