@@ -35,7 +35,6 @@
         switch("@Model.Type") {
             case "c":
             case "cpp":
-                alert("c");
                 editorMode = 'ace/mode/c_cpp';
                 break;
             case "cs":
@@ -63,15 +62,6 @@
                 editorMode = 'ace/mode/sql';
                 break;
         }
-        // 'ace/mode/c_cpp'
-        // 'ace/mode/csharp'
-        // 'ace/mode/css'
-        // 'ace/mode/html'
-        // 'ace/mode/java'
-        // 'ace/mode/javascript'
-        // 'ace/mode/php'
-        // 'ace/mode/python'
-        // 'ace/mode/sql'
 
         editor.setOptions({
             useWrapMode: true,
@@ -82,6 +72,7 @@
         });
         editor.setFontSize(17);
         var content = `@Model.Content`;
+        alert(content);
         editor.setValue(content, -1);
 
         $("form").submit(function () {
