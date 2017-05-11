@@ -12,6 +12,7 @@ body
 {
     margin: 6px 0px 0px 3px; 
     float: left;
+    padding: 0px 14px 0px 0px;
 }
 
 .navbar-right
@@ -37,12 +38,10 @@ body
     border:none;
 }
 
-.files
+.bla
 {
     margin-top:100px;
-    max-width: 75%;
 }
-
 
 .col-sm-4
 {
