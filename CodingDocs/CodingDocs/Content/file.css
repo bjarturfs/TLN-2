@@ -4,6 +4,24 @@
    padding-bottom:30px;
 }
 
+.inline_buttons
+{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   
+}
+.editor_button
+{
+    margin-right: 10px;
+}
+
+#file_name
+{
+   margin-top: 30px;
+   margin-bottom: 15px;
+}
+
 .img1
 {
     margin: 6px 0px 0px 3px; 
@@ -32,3 +50,4 @@
 {
     margin-top:90px;
 }
+
