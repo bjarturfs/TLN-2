@@ -5,22 +5,23 @@
 }
 
 <link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
 
 <div class="myAndShare">
     <div class="btn-group">
-        <button type="button" class="btn btn-primary">My Projects</button> 
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
-        
+        <button type="button" class="btn breadcrumb">My Projects</button> 
+        <button type="button" class="btn breadcrumb link1" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
     </div>
 </div>
 
 <div class="row bottom30">
     <div class="col-md-12">
-        <button class="btn btn-default pull-right">Create a project</button>
+        <button class="CreateProject pull-right">Create a project</button>
     </div>
 </div>
 
-<section id="myprojectForm">
+<div id="myProjects">
     @foreach (var proj in Model.OrderBy(proj => proj.Name))
     {
         <div class="col-sm-4">
@@ -33,23 +34,17 @@
             </div>
         </div>
     }
-
-</section>
+</div>
 
 <div id="CreateProjectForm"></div>
 
-
 @section Scripts{
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- This is for the dialog functionality and style -->
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    
-    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
  
     <script>
-         $(function () {
-             $("#CreateProjectForm").dialog({
-                 autoOpen: false
-             }); 
+        $(document).ready(function () {
+             // Creates a popup dialog when create project button is clicked
              $('.CreateProject').on('click', function () {
                  $("#CreateProjectForm").dialog({
                      autoOpen: true,
@@ -58,33 +53,38 @@
                      resizable: false,
                      title: 'Create a project',
                      modal: true,
+                     show: "clip",
                      open: function () {
                          $(this).load('@Url.Action("CreateProjectPartial", "Project")');
                      },
                      buttons: {
-                         "Create a Project": function () {
-                             CreateAProject();
-                             $(this).dialog("close");
+                         // Validates the input in the form, if valid calls the CreateAProject function
+                         "Create a project": function () {
+                             $('#myProjectForm .submit').click();
+                             if ($('#myProjectForm')[0].checkValidity()) {
+                                 CreateAProject();
+                                 $(this).dialog("close");
+                             }
+                             return false;
                          },
                          Cancel: function () {
                              $(this).dialog("close");
                          }
-                     },
-                     close: function(event, ui){
-                         setTimeout(function () { $("#myprojectForm").load(location.href + " #myprojectForm>*", ""); }, 500);
                      }
-                 });
+                });
                  return false;
              });
  
-             function CreateAProject() {
+            // Called from the dialog Create button
+            // Sends the data to ProjectController to be sent into the DB
+            function CreateAProject() {
                 $.ajax({
                      url: '@Url.Action("CreateProject", "Project")',
                      type: 'POST',
-                     data: $("#myForm").serialize(),
+                     data: $("#myProjectForm").serialize(),
                      success: function (data) {
                          if (data) {
-                             $(':input', '#myForm')
+                             $(':input', '#myProjectForm')
                              .not(':button, :submit, :reset, :hidden')
                              .val('')
                              .removeAttr('checked')
@@ -93,9 +93,10 @@
                      }
                  });
              }
- 
+             // Refreshes only the projects section to see newly created projects
+             $("#myProjects").load(location.href + " #myProjects>*", ""); 
          });
- 
+
      </script>
 }
 

@@ -1,16 +1,11 @@
 ﻿@model CodingDocs.Models.ViewModels.CreateProjectViewModel
- 
- <form id="myForm">
-    <div id="CreateProjectForm">
+
+<form name="myProjectForm" id="myProjectForm" method="post">
+    
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name)
-        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-
+        @Html.TextBoxFor(m => m.Name, new { required = true, maxlength = "30", name = "Name"  })
+       
         @Html.LabelFor(m => m.Type)
-        @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types)
-    </div>
+        @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types, new { required = true, name = "Type"})
+        <input type="submit" class="submit" style="display:none;"/>
 </form>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

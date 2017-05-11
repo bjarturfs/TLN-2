@@ -11,6 +11,7 @@ namespace CodingDocs.Models.ViewModels
         [Required]
         [MaxLength(30, ErrorMessage = "Name must be at most 30 characters.")]
         public string Name { get; set; }
+        [Required]
         [Display(Name = "Initial file type")]
         public string Type { get; set; }
         public string OwnerID { get; set; }
