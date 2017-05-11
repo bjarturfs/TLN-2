@@ -8,11 +8,12 @@
 
 <div class="myAndShare">
     <div class="btn-group">
-        <button type="button" class="btn breadcrumb" onclick="location.href='@Url.Action("MyProjects", "Project")'">My Projects</button>
-        <button type="button" class="btn breadcrumb link1">Shared Projects</button>
+        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("MyProjects", "Project")'">My Projects</button>
+        <button type="button" class="btn btn-primary">Shared Projects</button>
     </div>
 </div>
-<section id="myprojectForm">
+
+<section id="shareProjectFolders">
     @foreach (var proj in Model)
     {
         <div class="col-sm-4">

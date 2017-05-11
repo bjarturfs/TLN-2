@@ -37,3 +37,8 @@ body
 {
     margin-top:60px;
 }
+
+.errorMessage
+{
+    margin: 83px 0px 0px 0px;
+}
