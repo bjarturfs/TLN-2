@@ -22,23 +22,23 @@
         margin-bottom: 15px;
     }
 </style>
+<div class="nameOfFile">
+    <h2 id="file_name">@(Model.Project.Name + "/" + Model.Name + "." + Model.Type)</h2>
 
-<h2 id="file_name">@(Model.Project.Name + "/" + Model.Name + "." + Model.Type)</h2>
+    <div id="editor"></div>
+    <br />
 
-<div id="editor"></div>
-<br />
+    <div class="inline_buttons">
+        @using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
+        {
+            @Html.Hidden("Content", null, new { @id = "hidden_content" })
+            @Html.Hidden("Id", null, new { @id = "hidden_id" })
+            <input type="submit" value="Save" class="btn btn-primary editor_button" />
+        }
 
-<div class="inline_buttons">
-    @using (Html.BeginForm("SaveFile", "Project", FormMethod.Post))
-    {
-        @Html.Hidden("Content", null, new { @id = "hidden_content" })
-        @Html.Hidden("Id", null, new { @id = "hidden_id" })
-        <input type="submit" value="Save" class="btn btn-primary editor_button" />
-    }
-
-    @Html.ActionLink("Back to Project", "ViewProject", new { id = Model.Project.ID }, new { @class = "btn btn-default editor_button" })
+        @Html.ActionLink("Back to Project", "ViewProject", new { id = Model.Project.ID }, new { @class = "btn btn-default editor_button" })
+    </div>
 </div>
-
 @section scripts{
     <script src="~/Ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
