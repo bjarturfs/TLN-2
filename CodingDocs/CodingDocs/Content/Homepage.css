@@ -66,6 +66,9 @@ body
     color:#283655;
     border: 1px solid grey;
     background-color:#F1F1F2;
+    border-radius:3px;
+    line-height:30px;  
+    text-align:center;
 }
 
 .col-sm-4
