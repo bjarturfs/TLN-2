@@ -70,12 +70,17 @@
             theme: 'ace/theme/tomorrow_night',
             mode: editorMode,
         });
+
         editor.setFontSize(17);
-        var content = `@Model.Content`;
+        var content = htmlDecode(`@Model.Content`);
+        if("@Model.Type" == "html") content = htmlDecode(content);
         editor.setValue(content, -1);
 
         $("form").submit(function () {
-            $("#hidden_content").val(editor.getSession().getValue());
+            var editorContent = editor.getSession().getValue();
+            if("@Model.Type" == "html") editorContent = htmlEncode(editorContent)
+
+            $("#hidden_content").val(editorContent);
             $("#hidden_id").val(current);
 
             var form = $(this);
@@ -111,6 +116,14 @@
                 codeHub.server.onChange(obj, current);
             })
         });
+
+        function htmlEncode(value){
+            return $('<div/>').text(value).html();
+        }
+
+        function htmlDecode(value){
+            return $('<div/>').html(value).text();
+        }
     </script>
 }
 
