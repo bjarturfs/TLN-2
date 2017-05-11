@@ -53,6 +53,7 @@ body
     color:#283655;
     border-left:1px solid black;
     padding-left:25px;
+    
    
 }
 .link1:hover
@@ -104,5 +105,16 @@ body
 .folderName
 {
     margin-top:10px;
+}
+
+.btn-primary
+{
+    background-color: #283655;
+}
+
+#shareProjectFolders
+{
+    margin-top: 65px;
+    text-align: center;
 }
 
