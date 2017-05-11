@@ -72,14 +72,11 @@
         });
 
         editor.setFontSize(17);
-        var content = htmlDecode(`@Model.Content`);
-        if("@Model.Type" == "html") content = htmlDecode(content);
+        var content = htmlDecode(htmlDecode(`@Model.Content`));
         editor.setValue(content, -1);
 
         $("form").submit(function () {
-            var editorContent = editor.getSession().getValue();
-            if("@Model.Type" == "html") editorContent = htmlEncode(editorContent)
-
+            var editorContent = htmlEncode(editor.getSession().getValue());
             $("#hidden_content").val(editorContent);
             $("#hidden_id").val(current);
 
