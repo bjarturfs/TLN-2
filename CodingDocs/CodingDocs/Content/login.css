@@ -56,13 +56,13 @@ section{
 #registerForm{
 
     padding: 50px 8px 27px 45px;
-    width:510px;
-    height:410px;
+    width:480px;
+    height:450px;
 
 }
 
 .reg{
-     margin: -20px 95px 10px 80px;
+     margin: -20px 70px 10px 80px;
 }
 
 .img1{
@@ -98,5 +98,10 @@ section{
 .navbar-brand
 {
     margin-left:50px;
-    
+
+}
+
+.field-validation-error
+{
+    padding-right:70px;
 }
