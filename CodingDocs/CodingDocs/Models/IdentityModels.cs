@@ -20,11 +20,20 @@ namespace CodingDocs.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public interface IAppDataContext
     {
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<UsersInProject> UsersInProjects { get; set; }
-        public DbSet<File> Files { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
+        IDbSet<Project> Projects { get; set; }
+        IDbSet<UsersInProject> UsersInProjects { get; set; }
+        IDbSet<File> Files { get; set; }
+        int SaveChanges();
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppDataContext
+    {
+        public IDbSet<Project> Projects { get; set; }
+        public IDbSet<UsersInProject> UsersInProjects { get; set; }
+        public IDbSet<File> Files { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

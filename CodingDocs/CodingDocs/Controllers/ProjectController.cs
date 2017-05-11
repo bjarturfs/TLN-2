@@ -14,7 +14,7 @@ namespace CodingDocs.Controllers
     [Authorize]
     public class ProjectController : Controller
     {
-        private ProjectService pservice = new ProjectService();
+        private ProjectService pservice = new ProjectService(null);
 
         #region Projects
         // Gets all the projects of the user which he is the owner of 
@@ -59,7 +59,7 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View(project);
             }
