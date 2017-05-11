@@ -25,7 +25,9 @@
             <div class="panel panel-default">
                 <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="130" width="110" /></a>
                 <br />
-                <label class="fileName">@Html.ActionLink(file.Name, "GetFile", new { id = file.ID })</label>
+                <label class="fileName">@Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID })</label>
+                <br />
+                @Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you wish to delete this project?');" })
             </div>
         </div>
     }
