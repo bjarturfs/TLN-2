@@ -21,7 +21,8 @@
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <img src="~/Content/images/file.jpg" height="200" width="180" />
+                <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="200" width="180" /></a>
+                @*@<img src="~/Content/images/file.jpg" height="200" width="180" />*@
                 <br />
                 <label class="fileName">@Html.ActionLink(file.Name, "GetFile", new { id = file.ID })</label>
             </div>
@@ -45,6 +46,10 @@
         }
     </ul>
     </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to list", "MyProjects", "Project")
 </div>
 
 @section Scripts{

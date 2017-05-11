@@ -93,7 +93,7 @@ namespace CodingDocs.Services
                 UserName = usersNames,
                 OwnerName = ownerName
             };
-          
+
             return project;
         }
 
