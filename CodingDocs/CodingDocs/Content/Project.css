@@ -30,3 +30,17 @@ body
     margin-left:50px;
     
 }
+
+/*þetta leit betur út þegar þetta var með homepage.css */
+.maFile
+{
+    max-height: 45%;
+    max-width: 45%;
+
+}
+
+.textOutside
+{
+    word-wrap: break-word;
+
+}
