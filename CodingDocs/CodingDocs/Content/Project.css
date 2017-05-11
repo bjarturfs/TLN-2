@@ -37,10 +37,12 @@ body
     border:none;
 }
 
-.bla
+.files
 {
     margin-top:100px;
+    max-width: 75%;
 }
+
 
 .col-sm-4
 {
