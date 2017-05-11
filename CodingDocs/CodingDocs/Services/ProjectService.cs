@@ -82,7 +82,6 @@ namespace CodingDocs.Services
                 usersNames.Add(holder);
             }
 
-
             project.Files = files;
             project.UserName = usersNames;
             project.OwnerName = ownerName;
