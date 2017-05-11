@@ -1,6 +1,6 @@
 body
 {
-
+    background-color: #F1F1F2;
 }
 #hlekkur
 {
@@ -30,17 +30,62 @@ body
     margin-left:50px;
     
 }
-
-/*þetta leit betur út þegar þetta var með homepage.css */
-.maFile
+#fileList
 {
-    max-height: 45%;
-    max-width: 45%;
+    background-color: #F1F1F2;
+    border:none;
+}
+
+.bla
+{
+    margin-top:100px;
+}
+
+.col-sm-4
+{
+   background-color:#F1F1F2;
+   border:none;
+}
+.panel-default
+{
+     background-color:#F1F1F2;
+     border:none;
+}
+.fileName
+{
+    margin-top:10px;
+}
+
+.name
+{
+    margin-bottom:20px;
 
 }
 
-.textOutside
+.CreateAndShareProj
 {
-    word-wrap: break-word;
+    text-align:center;
+    margin: 110px 0px 0px 0px;
+}
 
+.Create-File
+{
+    background-color: #F1F1F2;
+    color:#283655;
+    border:none;
+    border-right:1px solid #000000;
+    padding-right:25px;
+}
+
+.Share-Project
+{
+    background-color: #F1F1F2;
+    color:#283655;
+    border: none;
+    padding-left:25px;
+}
+
+#UserList
+{
+    text-align:left;
 }
