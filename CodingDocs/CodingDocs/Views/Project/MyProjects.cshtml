@@ -12,13 +12,12 @@
         <button type="button" class="btn breadcrumb link1" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
     </div>
 </div>
+
 <div class="row bottom30">
     <div class="col-md-12">
         <button class="CreateProject pull-right">Create a project</button>
     </div>
 </div>
-
-
 
 <section id="myprojectForm">
     @foreach (var proj in Model.OrderBy(proj => proj.Name))
@@ -33,6 +32,7 @@
             </div>
         </div>
     }
+
 </section>
 
 <div id="CreateProjectForm"></div>
