@@ -7,8 +7,7 @@
         @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
 
         @Html.LabelFor(m => m.Type)
-        @Html.TextBoxFor(m => m.Type)
-        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types)
     </div>
 </form>
 
