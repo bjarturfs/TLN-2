@@ -14,7 +14,38 @@ namespace CodingDocs.Controllers
     [Authorize]
     public class ProjectController : Controller
     {
-        private ProjectService pservice = new ProjectService(null);
+        private ProjectService pservice;
+
+        public ProjectController()
+        {
+            pservice = new ProjectService(null);
+
+            List<SelectListItem> types = new List<SelectListItem>();
+
+            SelectListItem type1 = new SelectListItem { Text = "C", Value = "c", Selected = true };
+            SelectListItem type2 = new SelectListItem { Text = "C#", Value = "cs", Selected = false };
+            SelectListItem type3 = new SelectListItem { Text = "C++", Value = "cpp", Selected = false };
+            SelectListItem type4 = new SelectListItem { Text = "CSS", Value = "css", Selected = false };
+            SelectListItem type5 = new SelectListItem { Text = "HTML", Value = "html", Selected = false };
+            SelectListItem type6 = new SelectListItem { Text = "Java", Value = "java", Selected = false };
+            SelectListItem type7 = new SelectListItem { Text = "JavaScript", Value = "js", Selected = false };
+            SelectListItem type8 = new SelectListItem { Text = "PHP", Value = "php", Selected = false };
+            SelectListItem type9 = new SelectListItem { Text = "Python", Value = "py", Selected = false };
+            SelectListItem type10 = new SelectListItem { Text = "SQL", Value = "sql", Selected = false };
+
+            types.Add(type1);
+            types.Add(type2);
+            types.Add(type3);
+            types.Add(type4);
+            types.Add(type5);
+            types.Add(type6);
+            types.Add(type7);
+            types.Add(type8);
+            types.Add(type9);
+            types.Add(type10);
+
+            ViewBag.Types = types;
+        }
 
         #region Projects
         // Gets all the projects of the user which he is the owner of 
@@ -180,7 +211,6 @@ namespace CodingDocs.Controllers
                 return View(file);
             }
 
-            file.Type = pservice.GetProject(file.ProjectID).Type;
             pservice.CreateFile(file);
             return RedirectToAction("ViewProject", new { id = file.ProjectID });
         }

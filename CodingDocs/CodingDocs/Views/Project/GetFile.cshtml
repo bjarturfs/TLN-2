@@ -45,7 +45,50 @@
     <script src="~/signalr/hubs"></script>
     <script>
         var editor = ace.edit("editor");
-        var editorMode = 'ace/mode/javascript';
+        var editorMode = 'ace/mode/plain_text';
+        editorMode = 'ace/mode/plain_text';
+
+        switch("@Model.Type") {
+            case "c":
+            case "cpp":
+                alert("c");
+                editorMode = 'ace/mode/c_cpp';
+                break;
+            case "cs":
+                editorMode = 'ace/mode/csharp';
+                break;
+            case "css":
+                editorMode = 'ace/mode/css';
+                break;
+            case "html":
+                editorMode = 'ace/mode/html';
+                break;
+            case "java":
+                editorMode = 'ace/mode/java';
+                break;
+            case "js":
+                editorMode = 'ace/mode/javascript';
+                break;
+            case "php":
+                editorMode = 'ace/mode/php';
+                break;
+            case "py":
+                editorMode = 'ace/mode/python';
+                break;
+            case "sql":
+                editorMode = 'ace/mode/sql';
+                break;
+        }
+        // 'ace/mode/c_cpp'
+        // 'ace/mode/csharp'
+        // 'ace/mode/css'
+        // 'ace/mode/html'
+        // 'ace/mode/java'
+        // 'ace/mode/javascript'
+        // 'ace/mode/php'
+        // 'ace/mode/python'
+        // 'ace/mode/sql'
+
         editor.setOptions({
             useWrapMode: true,
             highlightActiveLine: true,

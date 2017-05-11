@@ -13,6 +13,7 @@ namespace CodingDocs.Services
     {
         private readonly IAppDataContext _db;
      
+        // Initialize _db to the real database or a mock database.
         public ProjectService(IAppDataContext context)
         {
             _db = context ?? new ApplicationDbContext();
