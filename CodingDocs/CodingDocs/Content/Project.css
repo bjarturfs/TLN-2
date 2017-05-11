@@ -91,3 +91,9 @@ body
 {
     text-align:left;
 }
+
+.files
+{
+    margin-top:100px;
+    max-width: 75%;
+}
