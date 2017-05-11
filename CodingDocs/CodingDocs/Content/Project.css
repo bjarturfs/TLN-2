@@ -2,10 +2,11 @@ body
 {
     background-color: #F1F1F2;
 }
-#hlekkur
+#link
 {
    background-color:#283655;
    padding-bottom:30px;
+   height:90px;
 }
 
 .img1
@@ -17,13 +18,13 @@ body
 
 .navbar-right
 {
-    margin-top:13px;
+    margin-top:12px;
     font-size:13px;
 }
 
 .navbar-header
 {
-    margin-top:27px;
+    margin-top:20px;
    
 }
 

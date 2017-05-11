@@ -1,7 +1,8 @@
-#hlekkur
+#link
 {
    background-color:#283655;
    padding-bottom:30px;
+   height:90px;
 }
 
 .inline_buttons
@@ -31,13 +32,13 @@
 
 .navbar-right
 {
-    margin-top:14px;
+    margin-top:12px;
     font-size:13px;
 }
 
 .navbar-header
 {
-    margin-top:27px;
+    margin-top:20px;
    
 }
 
