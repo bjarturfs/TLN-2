@@ -8,11 +8,10 @@
 
 <div class="myAndShare">
     <div class="btn-group">
-        <button onclick="MyProjects" class="btn breadcrumb">@Html.ActionLink("My Projects", "MyProjects", "Project", new {@class="link2"})</button>
-        <button class="btn breadcrumb">Shared Projects</button>
+        <button type="button" class="btn breadcrumb" onclick="location.href='@Url.Action("MyProjects", "Project")'">My Projects</button>
+        <button type="button" class="btn breadcrumb">Shared Projects</button>
     </div>
 </div>
-
 <section id="myprojectForm">
     @foreach (var proj in Model)
     {
@@ -27,11 +26,5 @@
         </div>
     }
 </section>
-<script>
-    function myAndShare()
-    {
-
-    }
-</script>
 
 

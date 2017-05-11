@@ -44,10 +44,9 @@ namespace CodingDocs.Services
 
         public ViewProjectViewModel GetProject(int projectId)
         {
-            var project = (from proj in _db.Projects
+            var prod = (from proj in _db.Projects
                            where proj.ID == projectId
                            select proj)
-                           .Select(x => new ViewProjectViewModel { ID = x.ID, Name = x.Name, Type = x.Type })
                            .SingleOrDefault();
 
             var files = (from file in _db.Files
@@ -59,12 +58,9 @@ namespace CodingDocs.Services
             var usersInProjectID = (from users in _db.UsersInProjects
                                     where users.ProjectID == projectId
                                     select users.UserID)
-                           .ToList();
+                                    .ToList();
 
-            var userID = (from proj in _db.Projects
-                          where proj.ID == projectId
-                          select proj.OwnerID)
-                          .SingleOrDefault();
+            var userID = prod.OwnerID;
 
             var ownerName = (from owner in _db.Users
                              where owner.Id == userID
@@ -82,11 +78,16 @@ namespace CodingDocs.Services
                 usersNames.Add(holder);
             }
 
-
-            project.Files = files;
-            project.UserName = usersNames;
-            project.OwnerName = ownerName;
-
+            var project = new ViewProjectViewModel
+            {
+                ID = prod.ID,
+                Name = prod.Name,
+                Type = prod.Type,
+                Files = files,
+                UserName = usersNames,
+                OwnerName = ownerName
+            };
+           
             return project;
         }
 
