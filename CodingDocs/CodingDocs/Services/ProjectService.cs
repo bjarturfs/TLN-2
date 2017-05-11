@@ -12,8 +12,7 @@ namespace CodingDocs.Services
     public class ProjectService
     {
         private readonly IAppDataContext _db;
-
-        
+     
         public ProjectService(IAppDataContext context)
         {
             _db = context ?? new ApplicationDbContext();
