@@ -51,8 +51,9 @@
             highlightActiveLine: true,
             showPrintMargin: false,
             theme: 'ace/theme/tomorrow_night',
-            mode: editorMode
+            mode: editorMode,
         });
+        editor.setFontSize(17);
         var content = `@Model.Content`;
         editor.setValue(content, -1);
 
