@@ -2,7 +2,7 @@ body
 {
     background-color: #F1F1F2;
 }
-#hlekkur
+#link
 {
    background-color:#283655;
    padding-bottom:30px;
@@ -12,6 +12,7 @@ body
 {
     margin: 6px 0px 0px 3px; 
     float: left;
+    padding: 0px 14px 0px 0px;
 }
 
 #myProjects
@@ -27,13 +28,13 @@ body
 
 .navbar-right
 {
-    margin-top:14px;
+    margin-top:12px;
     font-size:13px;
 }
 
 .navbar-header
 {
-    margin-top:27px;
+    margin-top:20px;
    
 }
 
@@ -42,19 +43,14 @@ body
     margin-left:50px;
     
 }
-.breadcrumb
-{
-    background-color:#F1F1F2;
-    color:#283655;
-}
 
 .link1
 {
     color:#283655;
     border-left:1px solid black;
     padding-left:25px;
-    
-   
+    height:90px;
+
 }
 .link1:hover
 {
@@ -85,18 +81,6 @@ body
 
 /* css for shared project*/
 
-.link2
-{
-    color:#283655;
-    border-right:1px solid black;
-    padding-right:25px;
-   
-}
-
-.link2:hover
-{
-    text-decoration:none;
-}
 .bottom30
 {
     margin-bottom:30px;

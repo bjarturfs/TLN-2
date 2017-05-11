@@ -1,7 +1,7 @@
 ﻿@model CodingDocs.Models.ViewModels.FileViewModel
 
 @{
-    ViewBag.Title = "GetFile";
+    ViewBag.Title = Model.Name + "." + Model.Type;
 }
 <link href="~/Content/file.css" rel="stylesheet" type="text/css">
 
@@ -35,7 +35,6 @@
         switch("@Model.Type") {
             case "c":
             case "cpp":
-                alert("c");
                 editorMode = 'ace/mode/c_cpp';
                 break;
             case "cs":
@@ -63,15 +62,6 @@
                 editorMode = 'ace/mode/sql';
                 break;
         }
-        // 'ace/mode/c_cpp'
-        // 'ace/mode/csharp'
-        // 'ace/mode/css'
-        // 'ace/mode/html'
-        // 'ace/mode/java'
-        // 'ace/mode/javascript'
-        // 'ace/mode/php'
-        // 'ace/mode/python'
-        // 'ace/mode/sql'
 
         editor.setOptions({
             useWrapMode: true,
@@ -80,12 +70,14 @@
             theme: 'ace/theme/tomorrow_night',
             mode: editorMode,
         });
+
         editor.setFontSize(17);
-        var content = `@Model.Content`;
+        var content = htmlDecode(htmlDecode(`@Model.Content`));
         editor.setValue(content, -1);
 
         $("form").submit(function () {
-            $("#hidden_content").val(editor.getSession().getValue());
+            var editorContent = htmlEncode(editor.getSession().getValue());
+            $("#hidden_content").val(editorContent);
             $("#hidden_id").val(current);
 
             var form = $(this);
@@ -121,6 +113,14 @@
                 codeHub.server.onChange(obj, current);
             })
         });
+
+        function htmlEncode(value){
+            return $('<div/>').text(value).html();
+        }
+
+        function htmlDecode(value){
+            return $('<div/>').html(value).text();
+        }
     </script>
 }
 

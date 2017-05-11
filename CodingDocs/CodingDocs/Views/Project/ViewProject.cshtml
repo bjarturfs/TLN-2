@@ -6,7 +6,7 @@
 
 <link href="~/Content/Project.css" rel="stylesheet" type="text/css">
 
-<div class="bla">
+
 
     <div class="CreateAndShareProj">
         <div class="btn-group"> </div>
@@ -15,43 +15,47 @@
         <button class="Share-Project">Share Project</button>
         <div id="InviteUserForm"></div>
     </div>
-    <h1 class="name">@Model.Name</h1>
 
+
+    <h1 class="name">@Model.Name</h1>
+<div class="files">
     @foreach (var file in Model.Files)
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="200" width="180" /></a>
-                @*@<img src="~/Content/images/file.jpg" height="200" width="180" />*@
+                <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="130" width="110" /></a>
                 <br />
-                <label class="fileName">@Html.ActionLink(file.Name, "GetFile", new { id = file.ID })</label>
+                <label class="fileName">@Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID })</label>
+                <br />
+                @Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you wish to delete this project?');" })
             </div>
         </div>
     }
 
 </div>
 
-<div>
-<h3>Project Owner</h3>
-    <div> @Model.OwnerName</div>
-    <div id="UserList">
-    @if(Model.UserName.Any())
-    {
-        <h3>Users In Project</h3>
-    }
-    <ul>
-        @foreach (var user in Model.UserName)
+<div class="owner-users">
+    <div>
+    <h3>Project Owner</h3>
+        <div> @Model.OwnerName</div>
+        <div id="UserList">
+        @if(Model.UserName.Any())
         {
-            <li>@(user + " ")</li>
+            <h3>Users In Project</h3>
         }
-    </ul>
+        <ul>
+            @foreach (var user in Model.UserName)
+            {
+                <li>@(user + " ")</li>
+            }
+        </ul>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to list", "MyProjects", "Project")
     </div>
 </div>
-
-<div>
-    @Html.ActionLink("Back to list", "MyProjects", "Project")
-</div>
-
 @section Scripts{
     
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>

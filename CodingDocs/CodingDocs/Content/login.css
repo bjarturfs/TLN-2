@@ -1,24 +1,28 @@
-body{
+body
+{
     background-repeat: no-repeat;
     background-size: 100%;
      
 }
 
-h1{
+h1
+{
     color:#ffffff; 
     text-align:center;
     padding-bottom:50px;
-    padding-top:50px;
+    padding-top:85px;
 }
 
-h3{
+h3
+{
     color:#ffffff;
     padding-bottom:26px;
     text-align: center;
     
 }
 
-section{
+section
+{
     background-color:#1E1F26;
     color:#ffffff;
     margin: 0px 0px 0px 330px;
@@ -28,32 +32,33 @@ section{
 
 }
 
-#loginForm{
+#loginForm
+{
     margin: 0px 0px 0px 330px;
     padding: 35px 8px 27px 45px;
     width:480px;
 }
-.checkbox{
+.checkbox
+{
     text-align:left;
 }
 
-.col-md-10{
+.col-md-10
+{
     text-align:right;
    
 }
 
-.log{
+.log
+{
      margin: -60px 70px 11px 5px;
 }
 
 /*fyrir register viewið*/
 
-.col-md-2{
-    color:#ffffff;
-    padding-bottom:10px;
-}
 
-#registerForm{
+#registerForm
+{
 
     padding: 50px 8px 27px 45px;
     width:480px;
@@ -61,20 +66,24 @@ section{
 
 }
 
-.reg{
+.reg
+{
      margin: -20px 70px 10px 80px;
 }
 
-.img1{
+.img1
+{
 
     margin: 8px 0px 0px 0px; 
+    padding: 0px 14px 0px 0px;
 
 }
 
-#hlekkur
+#link
 {
    background-color:#1E1F26;
    padding-bottom:30px;
+   height:90px;
 }
 
 .img1
@@ -85,13 +94,13 @@ section{
 
 .navbar-right
 {
-    margin-top:33px;
+    margin-top:22px;
     font-size:13px;
 }
 
 .navbar-header
 {
-    margin-top:27px;
+    margin-top:22px;
    
 }
 
