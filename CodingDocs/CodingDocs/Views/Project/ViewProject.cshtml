@@ -6,37 +6,29 @@
 
 <link href="~/Content/Project.css" rel="stylesheet" type="text/css">
 
-    <h1>@Model.Name</h1>
+<div class="bla">
 
-<div class="container-fluid">
-    <h3>File </h3>
-    <div class="row">
-        <div class="col-sm-3 col-lg-2">
-            <nav class="navbar navbar-default navbar-fixed-side" id="fileList">
-                @foreach (var file in Model.Files)
-                {
-                    @Html.ActionLink(file.Name, "GetFile", new { id = file.ID })
-                    <br />
-                }
-            </nav>
-        </div>
+    <div class="CreateAndShareProj">
+        <div class="btn-group"> </div>
+        <button class="Create-File">Create a new file</button>
+        <div id="CreateFileForm"></div>
+        <button class="Share-Project">Share Project</button>
+        <div id="InviteUserForm"></div>
     </div>
+    <h1 class="name">@Model.Name</h1>
+
+    @foreach (var file in Model.Files)
+    {
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <img src="~/Content/images/file.jpg" height="200" width="180" />
+                <br />
+                <label class="fileName">@Html.ActionLink(file.Name, "GetFile", new { id = file.ID })</label>
+            </div>
+        </div>
+    }
+
 </div>
-
-
-<button class="Create-File">Create a new file</button>
-<div id="CreateFileForm"></div>
-
-
-<label class="folderName">@Html.ActionLink("New File", "CreateFile", new { id = Model.ID })</label>
-
-<br />
-
-<button class="Share-Project">Share Project</button>
-<div id="InviteUserForm"></div>
-
-@Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
-
 
 <div>
 <h3>Project Owner</h3>
