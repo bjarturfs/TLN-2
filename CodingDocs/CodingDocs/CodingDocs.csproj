@@ -643,6 +643,7 @@
     <Content Include="Ace\src\worker-xquery.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\file.css" />
     <Content Include="Content\Homepage.css" />
     <Content Include="Content\images\anbakgrunns.jpeg" />
     <Content Include="Content\images\del.png" />

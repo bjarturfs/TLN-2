@@ -9,16 +9,15 @@
 <div class="myAndShare">
     <div class="btn-group">
         <button type="button" class="btn breadcrumb">My Projects</button> 
-        <button type="button" class="btn breadcrumb">@Html.ActionLink("Shared Projects", "SharedProjects", "Project", new {@class="link1" })</button>
+        <button type="button" class="btn breadcrumb link1" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
     </div>
 </div>
+
 <div class="row bottom30">
     <div class="col-md-12">
         <button class="CreateProject pull-right">Create a project</button>
     </div>
 </div>
-
-
 
 <section id="myprojectForm">
     @foreach (var proj in Model.OrderBy(proj => proj.Name))
@@ -33,6 +32,7 @@
             </div>
         </div>
     }
+
 </section>
 
 <div id="CreateProjectForm"></div>
@@ -70,7 +70,7 @@
                          }
                      },
                      close: function(event, ui){
-                         setTimeout(function () { $("#projectList").load(location.href + " #projectList>*", ""); }, 500);
+                         setTimeout(function () { $("#myprojectForm").load(location.href + " #myprojectForm>*", ""); }, 500);
                      }
                  });
                  return false;
