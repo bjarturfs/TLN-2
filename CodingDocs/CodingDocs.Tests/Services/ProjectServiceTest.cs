@@ -304,5 +304,118 @@ namespace CodingDocs.Tests.Services
             Assert.IsFalse(result3);
         }
         #endregion
+
+        #region Files
+        [TestMethod]
+        public void TestCreateFile()
+        {
+            int projectId = 1;
+            var fileVM = new CreateFileViewModel
+            {
+                Name = "newfile",
+                Type = "js",
+                ProjectID = projectId
+            };
+
+            pservice.CreateFile(fileVM);
+
+            var result = pservice.GetProject(projectId).Files;
+            Assert.AreEqual(3, result.Count);
+        }
+
+        [TestMethod]
+        public void TestDeleteFile()
+        {
+            int fileId = 1;
+            int projectId = 1;
+
+            pservice.DeleteFile(fileId);
+
+            var result = pservice.GetProject(projectId).Files;
+            Assert.AreEqual(1, result.Count);
+        }
+
+        [TestMethod]
+        public void TestSaveFile()
+        {
+            int fileId = 1;
+            var fileVM = new SaveFileViewModel
+            {
+                ID = fileId,
+                Content = "new content"
+            };
+
+            pservice.SaveFile(fileVM);
+
+            var result = pservice.GetFile(fileId);
+            Assert.AreEqual("new content", result.Content);
+        }
+
+        [TestMethod]
+        public void TestFileExistsInProject()
+        {
+            var fileVM1 = new CreateFileViewModel
+            {
+                Name = "file4",
+                ProjectID = 1
+            };
+            var fileVM2 = new CreateFileViewModel
+            {
+                Name = "file4",
+                ProjectID = 2
+            };
+            var fileVM3 = new CreateFileViewModel
+            {
+                Name = "index",
+                ProjectID = 2
+            };
+            
+            var result1 = pservice.FileExistsInProject(fileVM1);
+            var result2 = pservice.FileExistsInProject(fileVM2);
+            var result3 = pservice.FileExistsInProject(fileVM3);
+
+            Assert.IsTrue(result1);
+            Assert.IsFalse(result2);
+            Assert.IsTrue(result3);
+        }
+
+        [TestMethod]
+        public void TestGetFile()
+        {
+            int fileId = 5;
+
+            var result = pservice.GetFile(fileId);
+
+            Assert.AreEqual("file5.html in project3", result.Content);
+        }
+        #endregion
+
+        #region Users
+        [TestMethod]
+        public void TestUserExists()
+        {
+            string userName1 = "user1";
+            string userName2 = "user123";
+
+            var result1 = pservice.UserExists(userName1);
+            var result2 = pservice.UserExists(userName2);
+
+            Assert.IsTrue(result1);
+            Assert.IsFalse(result2);
+        }
+
+        [TestMethod]
+        public void TestGetUserId()
+        {
+            string userName1 = "user1";
+            string userName2 = "user2";
+
+            var result1 = pservice.GetUserId(userName1);
+            var result2 = pservice.GetUserId(userName2);
+
+            Assert.AreEqual("1", result1);
+            Assert.AreEqual("2", result2);
+        }
+        #endregion
     }
 }
