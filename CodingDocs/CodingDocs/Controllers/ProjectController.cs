@@ -214,7 +214,7 @@ namespace CodingDocs.Controllers
             return View("Error");
         }
 
-        // Creates the file from the partial view in the project with the id from the partal view
+        // Creates the file from the CreateFile view
         [HttpPost]
         public ActionResult CreateFile(CreateFileViewModel file)
         {
