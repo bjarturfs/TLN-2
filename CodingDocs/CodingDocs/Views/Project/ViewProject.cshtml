@@ -24,7 +24,7 @@
     {
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="130" width="110" /></a>
+                <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/maFile.png" height="130" width="110" /></a>
                 <br />
                 <label class="fileName">@Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID })</label>
                 <br />
