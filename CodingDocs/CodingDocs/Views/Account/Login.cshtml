@@ -16,7 +16,7 @@
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger", style = "text-align: left;" })
                         <div class="form-group">
                             @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
