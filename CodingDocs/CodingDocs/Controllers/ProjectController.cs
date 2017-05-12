@@ -193,7 +193,6 @@ namespace CodingDocs.Controllers
         #endregion
 
         #region Files
-
         // Creates a pop up window for create file and takes in project id 
         public ActionResult CreateFile(int id)
         {
