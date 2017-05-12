@@ -10,7 +10,7 @@
     <h2>@ViewBag.Title</h2>
 
     <p class="text-success">@ViewBag.StatusMessage</p>
-
+    @Html.ActionLink("Back To Homepage", "MyProjects", "Project", null, new { @class = "btn btn-default homepage"} )
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -28,4 +28,5 @@
             ]
         </dd>
     </dl>
+
 </div>
