@@ -225,6 +225,16 @@ namespace CodingDocs.Services
 
             return false;
         }
+
+        public bool ProjectExistsForUser(CreateProjectViewModel newProject)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.Name == newProject.Name
+                           && proj.OwnerID == newProject.OwnerID
+                           select proj).SingleOrDefault();
+
+            return (project != null);
+        }
         #endregion
 
         #region Files
@@ -272,6 +282,7 @@ namespace CodingDocs.Services
             var file = (from f in _db.Files
                         where f.Name == newFile.Name
                         && f.ProjectID == newFile.ProjectID
+                        && f.Type == newFile.Type
                         select f).SingleOrDefault();
 
             return (file != null);
