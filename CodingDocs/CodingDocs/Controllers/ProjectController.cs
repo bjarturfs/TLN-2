@@ -110,10 +110,16 @@ namespace CodingDocs.Controllers
         // Returns a view to invite a user
         public ActionResult InviteUser(int id)
         {
-            var user = new ShareProjectViewModel();
-            user.ProjectID = id;
+            string userId = User.Identity.GetUserId();
 
-            return View(user);
+            if(pservice.AuthorizeProject(userId, id))
+            {
+                var user = new ShareProjectViewModel();
+                user.ProjectID = id;
+                return View(user);
+            }
+
+            return View("Error");
         }
 
         // Shares the project with the user that was inserted in the InviteUser view

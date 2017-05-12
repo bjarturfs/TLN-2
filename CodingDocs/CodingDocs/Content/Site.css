@@ -23,7 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-/* css for CreateProject*/
+/* css for CreateProject, CreateFile, ShareProject*/
 .btn-default:hover
 {
     background-color:#375ebd;
