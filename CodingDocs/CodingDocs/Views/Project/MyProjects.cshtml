@@ -5,7 +5,6 @@
 }
 
 <link href="~/Content/Homepage.css" rel="stylesheet" type="text/css">
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 <div class="myAndShare">
     <div class="btn-group">
@@ -24,7 +23,7 @@
     @foreach (var proj in Model.OrderBy(proj => proj.Name))
     {
         <div class="col-sm-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default projectList">
                 <a href="@Url.Action("ViewProject", "Project",  new { id = proj.ID })" title="Coding Docs"><img src="~/Content/images/mappa.png" hight="220" width="200" alt="meppa" /></a>
                 <br />
                 <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
@@ -34,68 +33,3 @@
         </div>
     }
 </div>
-
-<div id="CreateProjectForm"></div>
-
-@section Scripts{
-    <!-- This is for the dialog functionality and style -->
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
- 
-    <script>
-        $(document).ready(function () {
-             // Creates a popup dialog when create project button is clicked
-             $('.CreateProject').on('click', function () {
-                 $("#CreateProjectForm").dialog({
-                     autoOpen: true,
-                     position: { my: "center", at: "top+350", of: window },
-                     width: 500,
-                     resizable: false,
-                     title: 'Create a project',
-                     modal: true,
-                     show: "clip",
-                     open: function () {
-                         $(this).load('@Url.Action("CreateProjectPartial", "Project")');
-                     },
-                     buttons: {
-                         // Validates the input in the form, if valid calls the CreateAProject function
-                         "Create a project": function () {
-                             $('#myProjectForm .submit').click();
-                             if ($('#myProjectForm')[0].checkValidity()) {
-                                 CreateAProject();
-                                 $(this).dialog("close");
-                             }
-                             return false;
-                         },
-                         Cancel: function () {
-                             $(this).dialog("close");
-                         }
-                     }
-                });
-                 return false;
-             });
- 
-            // Called from the dialog Create button
-            // Sends the data to ProjectController to be sent into the DB
-            function CreateAProject() {
-                $.ajax({
-                     url: '@Url.Action("CreateProject", "Project")',
-                     type: 'POST',
-                     data: $("#myProjectForm").serialize(),
-                     success: function (data) {
-                         if (data) {
-                             $(':input', '#myProjectForm')
-                             .not(':button, :submit, :reset, :hidden')
-                             .val('')
-                             .removeAttr('checked')
-                             .removeAttr('selected');
-                         }
-                     }
-                 });
-             }
-             // Refreshes only the projects section to see newly created projects
-             $("#myProjects").load(location.href + " #myProjects>*", ""); 
-         });
-
-     </script>
-}
-
