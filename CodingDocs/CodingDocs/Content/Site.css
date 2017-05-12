@@ -51,3 +51,7 @@ textarea {
     margin-left:19px;
 }
 
+.files
+{
+    box-shadow: none;
+}
