@@ -83,6 +83,8 @@ namespace CodingDocs.Services
                 usersNames.Add(holder);
             }
 
+            usersNames.Sort();
+
             var project = new ViewProjectViewModel
             {
                 ID = prod.ID,
