@@ -9,13 +9,13 @@
 <div class="myAndShare">
     <div class="btn-group">
         <button type="button" class="btn btn-primary">My Projects</button>
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
+        <button type="button" class="btn btn-default btnHover" onclick="location.href='@Url.Action("SharedProjects", "Project")'">Shared Projects</button>
     </div>
 </div>
 
 <div class="row bottom30">
     <div class="col-md-12">
-        @Html.ActionLink("Create a project", "CreateProject", null ,new { @class="btn btn-default pull-right"})
+        @Html.ActionLink("Create a project", "CreateProject", null ,new { @class= "btn btn-default pull-right btnHover" })
     </div>
 </div>
 

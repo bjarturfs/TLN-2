@@ -17,10 +17,10 @@
         {
             @Html.Hidden("Content", null, new { @id = "hidden_content" })
             @Html.Hidden("Id", null, new { @id = "hidden_id" })
-            <input type="submit" value="Save" class="btn btn-primary editor_button" />
+            <input type="submit" value="Save" class="btn btn-primary editor_button btnHover" />
         }
 
-        @Html.ActionLink("Back to Project", "ViewProject", new { id = Model.Project.ID }, new { @class = "btn btn-default editor_button" })
+        @Html.ActionLink("Back to Project", "ViewProject", new { id = Model.Project.ID }, new { @class = "btn btn-default editor_button btnHover" })
     </div>
 </div>
 @section scripts{

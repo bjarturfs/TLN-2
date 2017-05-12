@@ -25,8 +25,8 @@
         @Html.HiddenFor(model => model.ProjectID, new { htmlAttributes = new { value = Model.ProjectID } })
         <div class="form-group" id="lessLeft">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Invite User" class="btn btn-default" />
-                @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID }, new { @class = "btn btn-default" })
+                <input type="submit" value="Invite User" class="btn btn-default btnHover" />
+                @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID }, new { @class = "btn btn-default btnHover" })
             </div>
         </div>
     </div>

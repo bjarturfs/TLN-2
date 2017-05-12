@@ -24,7 +24,7 @@ textarea {
 }
 
 /* css for CreateProject, CreateFile, ShareProject*/
-.btn-default:hover
+.btnHover:hover
 {
     background-color:#375ebd;
     color:#ffffff;
