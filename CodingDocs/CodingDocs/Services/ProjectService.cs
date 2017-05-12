@@ -226,6 +226,7 @@ namespace CodingDocs.Services
             return false;
         }
 
+        // Check if the user already has a project by this name
         public bool ProjectExistsForUser(CreateProjectViewModel newProject)
         {
             var project = (from proj in _db.Projects
