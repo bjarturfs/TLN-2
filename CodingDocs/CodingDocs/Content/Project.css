@@ -98,3 +98,9 @@ body
     margin-top:100px;
     max-width: 75%;
 }
+
+.btn-default:hover
+{
+    background-color:#375ebd;
+    color:#ffffff;
+}

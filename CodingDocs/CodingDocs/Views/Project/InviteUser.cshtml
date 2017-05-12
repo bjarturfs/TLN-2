@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Invite User";
 }
-
-<h2>InviteUser</h2>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css">
+<h2 class="paddingDown">InviteUser</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,11 +12,11 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ShareProjectViewModel</h4>
+        <h4 class="rightPlace">ShareProjectViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
+        <div class="form-group" id="toLeft">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
@@ -24,20 +24,14 @@
             </div>
         </div>
         @Html.HiddenFor(model => model.ProjectID, new { htmlAttributes = new { value = Model.ProjectID } })
-        <div class="form-group">
+        <div class="form-group" id="lessLeft">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Invite User" class="btn btn-default" />
+                @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID }, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "MyProjects")
-    <br />
-    @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID })
-</div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

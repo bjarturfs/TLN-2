@@ -7,18 +7,17 @@
 <link href="~/Content/Project.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="~/Content/jquery-ui.css" />
 
-
 <div class="CreateAndShareProj">
-    <div class="btn-group"> </div>
-    <button class="Create-File"></button>
-    @Html.ActionLink("Create a new file", "CreateFile", new { id = Model.ID })
-    <div id="CreateTheFileForm"></div>
-    @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
-    <div id="ShareUserForm"></div>
+    <div class="btn-group">
+        @Html.ActionLink("Create a new file", "CreateFile", new { id = Model.ID }, new {  @class = "btn btn-default" })
+        @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID }, new { @class = "btn btn-default"} )
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to list", "MyProjects", "Project", new { @class = "btn btn-default pull-right" })
 </div>
 
-
-    <h1 class="name">@Model.Name</h1>
+<h1 class="name">@Model.Name</h1>
 <div class="files">
     @foreach (var file in Model.Files)
     {
@@ -51,10 +50,6 @@
             }
         </ul>
         </div>
-    </div>
-
-    <div>
-        @Html.ActionLink("Back to list", "MyProjects", "Project")
     </div>
 </div>
 

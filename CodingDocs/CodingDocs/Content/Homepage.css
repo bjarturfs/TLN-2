@@ -102,3 +102,8 @@ body
     text-align: center;
 }
 
+.btn-default:hover
+{
+    background-color:#375ebd;
+    color:#ffffff;
+}

@@ -22,3 +22,31 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* css for CreateProject*/
+.btn-default:hover
+{
+    background-color:#375ebd;
+    color:#ffffff;
+}
+
+.paddingDown
+{
+    padding-top:50px;
+    margin-left:127px;
+}
+
+.rightPlace
+{
+    margin-left:125px;
+}
+
+#toLeft
+{
+    margin-left:20px;
+}
+
+#lessLeft
+{
+    margin-left:19px;
+}

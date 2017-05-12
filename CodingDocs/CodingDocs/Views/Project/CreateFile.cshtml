@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Create File";
 }
-
-<h2>CreateFile</h2>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css">
+<h2 class="paddingDown">CreateFile</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -30,11 +30,8 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID }, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Cancel", "ViewProject", new { id = Model.ProjectID })
-</div>
