@@ -20,7 +20,6 @@ namespace CodingDocs.Services
         }
 
         #region Projects
-
         // Returns a list of ProjectViewModel with the projects which the ownerID of the projects is the userId that gets sent in
         public List<ProjectViewModel> GetIndividualProjects(string userId)
         {
@@ -225,10 +224,20 @@ namespace CodingDocs.Services
 
             return false;
         }
+
+        // Check if the user already has a project by this name
+        public bool ProjectExistsForUser(CreateProjectViewModel newProject)
+        {
+            var project = (from proj in _db.Projects
+                           where proj.Name == newProject.Name
+                           && proj.OwnerID == newProject.OwnerID
+                           select proj).SingleOrDefault();
+
+            return (project != null);
+        }
         #endregion
 
         #region Files
-
         // Creates a file with the attributes from the CreateFileViewModel
         public void CreateFile(CreateFileViewModel fileVM)
         {
@@ -272,6 +281,7 @@ namespace CodingDocs.Services
             var file = (from f in _db.Files
                         where f.Name == newFile.Name
                         && f.ProjectID == newFile.ProjectID
+                        && f.Type == newFile.Type
                         select f).SingleOrDefault();
 
             return (file != null);
@@ -304,7 +314,6 @@ namespace CodingDocs.Services
         #endregion
 
         #region Users
-
         // Returns true if the userName that gets sent in exists in our database
         public bool UserExists(string userName)
         {

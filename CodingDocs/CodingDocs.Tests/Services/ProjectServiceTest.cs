@@ -303,6 +303,34 @@ namespace CodingDocs.Tests.Services
             Assert.IsTrue(result2);
             Assert.IsFalse(result3);
         }
+
+        [TestMethod]
+        public void TestProjectExistsForUser()
+        {
+            var projectVM1 = new CreateProjectViewModel
+            {
+                Name = "project1",
+                OwnerID = "1"
+            };
+            var projectVM2 = new CreateProjectViewModel
+            {
+                Name = "project2",
+                OwnerID = "1"
+            };
+            var projectVM3 = new CreateProjectViewModel
+            {
+                Name = "project3",
+                OwnerID = "1"
+            };
+
+            var result1 = pservice.ProjectExistsForUser(projectVM1);
+            var result2 = pservice.ProjectExistsForUser(projectVM2);
+            var result3 = pservice.ProjectExistsForUser(projectVM3);
+
+            Assert.IsTrue(result1);
+            Assert.IsFalse(result2);
+            Assert.IsTrue(result3);
+        }
         #endregion
 
         #region Files
@@ -357,26 +385,37 @@ namespace CodingDocs.Tests.Services
             var fileVM1 = new CreateFileViewModel
             {
                 Name = "file4",
-                ProjectID = 1
+                ProjectID = 1,
+                Type = "js"
             };
             var fileVM2 = new CreateFileViewModel
             {
                 Name = "file4",
-                ProjectID = 2
+                ProjectID = 1,
+                Type = "html"
             };
             var fileVM3 = new CreateFileViewModel
             {
-                Name = "index",
-                ProjectID = 2
+                Name = "file4",
+                ProjectID = 2,
+                Type = "js"
             };
-            
+            var fileVM4 = new CreateFileViewModel
+            {
+                Name = "index",
+                ProjectID = 2,
+                Type = "cs"
+            };
+
             var result1 = pservice.FileExistsInProject(fileVM1);
             var result2 = pservice.FileExistsInProject(fileVM2);
             var result3 = pservice.FileExistsInProject(fileVM3);
+            var result4 = pservice.FileExistsInProject(fileVM4);
 
             Assert.IsTrue(result1);
             Assert.IsFalse(result2);
-            Assert.IsTrue(result3);
+            Assert.IsFalse(result3);
+            Assert.IsTrue(result4);
         }
 
         [TestMethod]
