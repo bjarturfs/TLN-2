@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types)
+                @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types, new { @class = "btn btn-default dropdown-toggle" })
             </div>
         </div>
         @Html.HiddenFor(model => model.ProjectID, new { htmlAttributes = new { value = Model.ProjectID } })

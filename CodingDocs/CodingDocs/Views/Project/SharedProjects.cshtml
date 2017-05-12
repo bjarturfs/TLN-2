@@ -22,7 +22,7 @@
                 <br />
                 <label class="folderName">@Html.ActionLink(proj.Name, "ViewProject", new { id = proj.ID })</label>
                 <br />
-                @Html.ActionLink("Remove", "RemoveSharedProject", new { id = proj.ID }, new { style = "color:red" })
+                @Html.ActionLink("Remove", "RemoveSharedProject", new { id = proj.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you want to be removed from this project?');" })
             </div>
         </div>
     }
