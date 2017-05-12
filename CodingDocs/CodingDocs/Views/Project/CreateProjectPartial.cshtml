@@ -1,11 +1,12 @@
 ﻿@model CodingDocs.Models.ViewModels.CreateProjectViewModel
 
 <form name="myProjectForm" id="myProjectForm" method="post">
-    
+    <div class="form-group">
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { required = true, maxlength = "30", name = "Name"  })
+        @Html.TextBoxFor(m => m.Name, new { required = true, maxlength = "30"})
        
         @Html.LabelFor(m => m.Type)
         @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.Types, new { required = true, name = "Type"})
         <input type="submit" class="submit" style="display:none;"/>
+    </div>
 </form>
