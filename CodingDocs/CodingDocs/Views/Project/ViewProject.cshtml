@@ -5,16 +5,16 @@
 }
 
 <link href="~/Content/Project.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
 
 
-
-    <div class="CreateAndShareProj">
-        <div class="btn-group"> </div>
-        <button class="Create-File">Create a new file</button>
-        <div id="CreateFileForm"></div>
-        <button class="Share-Project">Share Project</button>
-        <div id="InviteUserForm"></div>
-    </div>
+<div class="CreateAndShareProj">
+    <div class="btn-group"> </div>
+    <button class="Create-File">Create a new file</button>
+    <div id="CreateTheFileForm"></div>
+    <button class="Share-Project">Share Project</button>
+    <div id="ShareUserForm"></div>
+</div>
 
 
     <h1 class="name">@Model.Name</h1>
@@ -25,7 +25,9 @@
             <div class="panel panel-default">
                 <a href="@Url.Action("GetFile", "Project", new { id = file.ID })"><img src="~/Content/images/file.jpg" height="130" width="110" /></a>
                 <br />
-                <label class="fileName">@Html.ActionLink(file.Name, "GetFile", new { id = file.ID })</label>
+                <label class="fileName">@Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID })</label>
+                <br />
+                @Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you wish to delete this project?');" })
             </div>
         </div>
     }
@@ -41,7 +43,7 @@
         {
             <h3>Users In Project</h3>
         }
-        <ul>
+        <ul id="usersInProject">
             @foreach (var user in Model.UserName)
             {
                 <li>@(user + " ")</li>
@@ -54,43 +56,42 @@
         @Html.ActionLink("Back to list", "MyProjects", "Project")
     </div>
 </div>
+
+@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+
+
+
 @section Scripts{
-    
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
-<link rel="stylesheet" href="~/Content/jquery-ui.css" />
 <script>
 
         $(function () {
-            $("#CreateFileForm").dialog({
-                autoOpen: false
-            });
-            
             $('.Create-File').on('click', function () {
-                $("#CreateFileForm").dialog({
+                $("#CreateTheFileForm").dialog({
                     autoOpen: true,
                     position: { my: "center", at: "top+350", of: window },
                     width: 440,
                     resizable: false,
                     title: 'Create a file',
                     modal: true,
+                    show: "clip",
                     open: function () {
-                        $(this).load('@Url.Action("CreateFilePartial", "Project", new {id=Model.ID})');
+                        $(this).load('@Url.Action("CreateFilePartial", "Project", new { id = Model.ID })');
                     },
                     buttons: {
                         "Create a File": function () {
-                            CreateFile();
-                            $(this).dialog("close");
+                            $('#CreateFileForm .submit').click();
+                            if ($('#CreateFileForm')[0].checkValidity()) {
+                                CreateFile();
+                                $(this).dialog("close");
+                            }
+                            return false;
                         },
                         Cancel: function () {
                             $(this).dialog("close");
                         }
-                    },
-                    close: function () {
-                        setTimeout(function () { $("#fileList").load(location.href + " #fileList>*", ""); }, 500);
-                        
-                        
                     }
                 });
                 return false;
@@ -98,12 +99,12 @@
 
             function CreateFile() {
                 $.ajax({
-                    url: '@Url.Action("CreateFile","Project")',
+                    url: '@Url.Action("CreateFile", "Project")',
                     type: 'POST',
-                    data: $("#myForm").serialize(),
+                    data: $("#CreateFileForm").serialize(),
                     success: function (data) {
                         if (data) {
-                            $(':input', '#myForm')
+                            $(':input', '#CreateFileForm')
                             .not(':button, :submit, :reset, :hidden')
                             .val('')
                             .removeAttr('checked')
@@ -113,33 +114,39 @@
                 });
             }
 
+            $("#fileList").load(location.href + " #fileList>*", "");
+
+
+
+
+
 
 
 
             $('.Share-Project').on('click', function () {
-                $("#InviteUserForm").dialog({
+                $("#ShareUserForm").dialog({
                     autoOpen: true,
                     position: { my: "center", at: "top+350", of: window },
                     width: 400,
                     resizable: false,
                     title: 'Invite user to your project',
                     modal: true,
+                    show: "clip",
                     open: function () {
-                        $(this).load('@Url.Action("InviteUserPartial", "Project", new {id=Model.ID})');
+                        $(this).load('@Url.Action("InviteUserPartial", "Project", new { id = Model.ID })');
                     },
                     buttons: {
                         "Invite user": function () {
-                            InviteUser();
-                            $(this).dialog("close");
+                            $('#InviteUserForm .submit').click();
+                            if ($('#InviteUserForm')[0].checkValidity()) {
+                                InviteUser();
+                                $(this).dialog("close");
+                            }
+                            return false;
                         },
                         Cancel: function () {
                             $(this).dialog("close");
                         }
-                    },
-                    close: function () {
-                        setTimeout(function () { $("#UserList").load(location.href + " #UserList>*", ""); }, 500);
-
-
                     }
                 });
                 return false;
@@ -149,10 +156,10 @@
                 $.ajax({
                     url: '@Url.Action("InviteUser", "Project")',
                     type: 'POST',
-                    data: $("#myForm").serialize(),
+                    data: $("#InviteUserForm").serialize(),
                     success: function (data) {
                         if (data) {
-                            $(':input', '#myForm')
+                            $(':input', '#InviteUserForm')
                             .not(':button, :submit, :reset, :hidden')
                             .val('')
                             .removeAttr('checked')
@@ -161,7 +168,7 @@
                     }
                 });
             }
-
+            $("#usersInProject").load(location.href + " #usersInProject>*", "");
         });
 </script>    
 }
