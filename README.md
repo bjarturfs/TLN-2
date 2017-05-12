@@ -19,4 +19,4 @@ To get Coding Docs on your computer you have to install [Visual Studio 2015](htt
 
 Clone or download this repository and open the CodingDocs folder and run the CodingDocs.sln file  
 
-
+To be able to run the unit tests you might have to include a reference to Microsoft.AspNet.Identity.EntityFramework
