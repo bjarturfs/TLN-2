@@ -103,9 +103,9 @@ namespace CodingDocs.Services
         {
             var file = (from f in _db.Files
                         where f.ID == fileId
-                        select f).SingleOrDefault();
+                        select f.ProjectID).SingleOrDefault();
 
-            return file.ProjectID;
+            return file;
         }
 
         // Creates a project with the attributes from the CreateProjectViewModel that gets sent in
