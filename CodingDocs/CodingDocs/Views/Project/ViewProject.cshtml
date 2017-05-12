@@ -10,9 +10,10 @@
 
 <div class="CreateAndShareProj">
     <div class="btn-group"> </div>
-    <button class="Create-File">Create a new file</button>
+    <button class="Create-File"></button>
+    @Html.ActionLink("Create a new file", "CreateFile", new { id = Model.ID })
     <div id="CreateTheFileForm"></div>
-    <button class="Share-Project">Share Project</button>
+    @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID })
     <div id="ShareUserForm"></div>
 </div>
 

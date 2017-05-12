@@ -80,13 +80,13 @@ namespace CodingDocs.Controllers
             return View("ErrorViewProject");
         }
 
-        // Gets a pop up window for create project
-        public PartialViewResult CreateProjectPartial()
+        // Returns a view to create a project
+        public ActionResult CreateProject()
         {
-            return PartialView("CreateProjectPartial", new CreateProjectViewModel());
+            return View();
         }
 
-        // Creates the project which was entered in the partial view
+        // Creates the project which was entered in the view
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
@@ -102,13 +102,13 @@ namespace CodingDocs.Controllers
             return RedirectToAction("MyProjects");
         }
 
-        // Gets a pop up view which takes in the project id which we want to share
-        public PartialViewResult InviteUserPartial(int id)
+        // Returns a view to invite a user
+        public ActionResult InviteUser(int id)
         {
             var user = new ShareProjectViewModel();
             user.ProjectID = id;
-            
-            return PartialView("InviteUserPartial", user);
+
+            return View(user);
         }
 
         // Shares the project with the user that was inserted in the InviteUser view
@@ -190,11 +190,18 @@ namespace CodingDocs.Controllers
         #region Files
 
         // Creates a pop up window for create file and takes in project id 
-        public PartialViewResult CreateFilePartial(int id)
+        public ActionResult CreateFile(int id)
         {
-            var viewModel = new CreateFileViewModel();
-            viewModel.ProjectID = id;
-            return PartialView("CreateFilePartial", viewModel);
+            string userId = User.Identity.GetUserId();
+
+            if(pservice.AuthorizeProject(userId, id))
+            {
+                var viewModel = new CreateFileViewModel();
+                viewModel.ProjectID = id;
+                return View(viewModel);
+            }
+
+            return View("Error");
         }
 
         // Creates the file from the partial view in the project with the id from the partal view
