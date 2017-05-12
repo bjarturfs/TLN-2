@@ -90,13 +90,18 @@ namespace CodingDocs.Controllers
         [HttpPost]
         public ActionResult CreateProject(CreateProjectViewModel project)
         {
-            if(!ModelState.IsValid)
+            string userId = User.Identity.GetUserId();
+            project.OwnerID = userId;
+
+            if (pservice.ProjectExistsForUser(project))
+            {
+                ModelState.AddModelError("Name", "You already have a project by this name.");
+            }
+
+            if (!ModelState.IsValid)
             {
                 return View(project);
             }
-
-            string userId = User.Identity.GetUserId();
-            project.OwnerID = userId;
 
             pservice.CreateProject(project);
             return RedirectToAction("MyProjects");
@@ -188,7 +193,6 @@ namespace CodingDocs.Controllers
         #endregion
 
         #region Files
-
         // Creates a pop up window for create file and takes in project id 
         public ActionResult CreateFile(int id)
         {

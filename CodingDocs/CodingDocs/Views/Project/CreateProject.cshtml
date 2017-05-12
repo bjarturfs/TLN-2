@@ -4,14 +4,13 @@
     ViewBag.Title = "Create Project";
 }
 
-<h2>CreateProject</h2>
+<h2>Create Project</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ProjectViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -38,3 +37,13 @@
     </div>
 }
 
+<<<<<<< HEAD
+=======
+<div>
+    @Html.ActionLink("Cancel", "MyProjects")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+>>>>>>> 924e9f7acdb2c9dabcbd400c66b47ee48846edfa
