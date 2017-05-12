@@ -10,6 +10,7 @@ Coding Docs is written in Visual Studio 2015 and deployed with Azure web service
 * Bjartur Fannar Stefánsson
 * Davíð Birgisson
 * Gunnar Birnir Ólafsson
+* Sóley Ásgeirsdóttir
 * Viktoria Ósk Einarsdóttir
 
 ## Installation
