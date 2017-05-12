@@ -5,7 +5,6 @@
 }
 
 <link href="~/Content/Project.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="~/Content/jquery-ui.css" />
 
 <div class="CreateAndShareProj">
     <div class="btn-group">
@@ -13,11 +12,13 @@
         @Html.ActionLink("Share Project", "InviteUser", new { id = Model.ID }, new { @class = "btn btn-default"} )
     </div>
 </div>
+
 <div>
     @Html.ActionLink("Back to list", "MyProjects", "Project", new { @class = "btn btn-default pull-right" })
 </div>
 
 <h1 class="name">@Model.Name</h1>
+
 <div class="files">
     @foreach (var file in Model.Files)
     {
@@ -27,17 +28,15 @@
                 <br />
                 <label class="fileName">@Html.ActionLink(file.Name + "." + file.Type, "GetFile", new { id = file.ID })</label>
                 <br />
-                @Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you wish to delete this project?');" })
+                @Html.ActionLink("Delete", "DeleteFile", new { id = file.ID }, new { style = "color:red", onclick = "return confirm('Are you sure you want to delete this file?');" })
             </div>
         </div>
     }
-
 </div>
 
 <div class="owner-users">
-    <div>
     <h3>Project Owner</h3>
-        <div> @Model.OwnerName</div>
+    <div> @Model.OwnerName</div>
         <div id="UserList">
         @if(Model.UserName.Any())
         {
@@ -49,119 +48,5 @@
                 <li>@(user + " ")</li>
             }
         </ul>
-        </div>
     </div>
 </div>
-
-@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-
-@section Scripts{
-<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-<script>
-
-        $(function () {
-            $('.Create-File').on('click', function () {
-                $("#CreateTheFileForm").dialog({
-                    autoOpen: true,
-                    position: { my: "center", at: "top+350", of: window },
-                    width: 440,
-                    resizable: false,
-                    title: 'Create a file',
-                    modal: true,
-                    show: "clip",
-                    open: function () {
-                        $(this).load('@Url.Action("CreateFilePartial", "Project", new { id = Model.ID })');
-                    },
-                    buttons: {
-                        "Create a File": function () {
-                            $('#CreateFileForm .submit').click();
-                            if ($('#CreateFileForm')[0].checkValidity()) {
-                                CreateFile();
-                                $(this).dialog("close");
-                            }
-                            return false;
-                        },
-                        Cancel: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                return false;
-            });
-
-            function CreateFile() {
-                $.ajax({
-                    url: '@Url.Action("CreateFile", "Project")',
-                    type: 'POST',
-                    data: $("#CreateFileForm").serialize(),
-                    success: function (data) {
-                        if (data) {
-                            $(':input', '#CreateFileForm')
-                            .not(':button, :submit, :reset, :hidden')
-                            .val('')
-                            .removeAttr('checked')
-                            .removeAttr('selected');
-                        }
-                    }
-                });
-            }
-
-            $("#fileList").load(location.href + " #fileList>*", "");
-
-
-
-
-
-
-
-
-            $('.Share-Project').on('click', function () {
-                $("#ShareUserForm").dialog({
-                    autoOpen: true,
-                    position: { my: "center", at: "top+350", of: window },
-                    width: 400,
-                    resizable: false,
-                    title: 'Invite user to your project',
-                    modal: true,
-                    show: "clip",
-                    open: function () {
-                        $(this).load('@Url.Action("InviteUserPartial", "Project", new { id = Model.ID })');
-                    },
-                    buttons: {
-                        "Invite user": function () {
-                            $('#InviteUserForm .submit').click();
-                            if ($('#InviteUserForm')[0].checkValidity()) {
-                                InviteUser();
-                                $(this).dialog("close");
-                            }
-                            return false;
-                        },
-                        Cancel: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                return false;
-            });
-
-            function InviteUser() {
-                $.ajax({
-                    url: '@Url.Action("InviteUser", "Project")',
-                    type: 'POST',
-                    data: $("#InviteUserForm").serialize(),
-                    success: function (data) {
-                        if (data) {
-                            $(':input', '#InviteUserForm')
-                            .not(':button, :submit, :reset, :hidden')
-                            .val('')
-                            .removeAttr('checked')
-                            .removeAttr('selected');
-                        }
-                    }
-                });
-            }
-            $("#usersInProject").load(location.href + " #usersInProject>*", "");
-        });
-</script>    
-}
